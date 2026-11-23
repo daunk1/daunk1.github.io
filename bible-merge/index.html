@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>바이블 머지 — 팀 프로젝트 · AI 개선 포트폴리오</title>
+<meta name="description" content="팀이 손그림으로 기획한 머지 게임을, AI로 점검·밸런스 수정·역기획 반영·그림 교체까지 이어 간 기록">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .hero .emblem { width: 240px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .role { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .role .card h4 { display: flex; align-items: center; gap: 8px; }
+  @media (max-width: 720px) { .role { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="kicker">AI GAME MAKER PORTFOLIO · 팀 프로젝트</span>
+      <h1>〈바이블 머지〉<br>손그림 기획에서 Unity 완성까지</h1>
+      <p class="lead">팀이 함께 기획한 성경 이야기 머지 게임을, 기획 담당인 제가 <b>AI로 점검하고 고쳐서</b> v1.0에서 v1.4까지 키운 기록입니다.</p>
+      <div class="who">김다운 (기획) · 2026.11.19 – 11.20 · Claude Code · Unity 6 · Gemini</div>
+      <div class="stats">
+        <div class="stat"><b>10</b><span>명령</span></div>
+        <div class="stat"><b>v1.0 → v1.4</b><span>4번 개정</span></div>
+        <div class="stat"><b>버그 6 · 밸런스 4</b><span>AI 점검으로 찾아 고침</span></div>
+        <div class="stat"><b>89장</b><span>Gemini로 다시 그린 그림</span></div>
+      </div>
+      <div class="btns">
+        <a class="btn primary" href="#compare">▶ v1.0 · v1.4 비교 영상</a>
+        <a class="btn ghost" href="#play">직접 플레이</a>
+      </div>
+    </div>
+    <img class="emblem" src="assets/img/shots/v14_title.jpg" alt="">
+  </div>
+</header>
+
+<nav class="toc" aria-label="목차">
+  <div class="wrap">
+    <a href="#s1">1. 개요</a><a href="#s2">2. 출발점</a><a href="#s3">3. 명령 기록</a><a href="#s4">4. AI 점검</a><a href="#s5">5. 역기획 반영</a><a href="#s6">6. MD 활용</a><a href="#s7">7. 그림 교체</a><a href="#s8">8. v1.0 vs v1.4</a><a href="#s9">9. 정리</a>
+  </div>
+</nav>
+
+<main>
+
+<section class="part" id="s1">
+  <div class="band"><div class="wrap"><div class="num">01</div><h2>개요</h2><p>팀이 함께 만든 부분과, 내가 AI로 이어서 한 부분</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">1.1</span>한눈에 보기</h3>
+    <div class="scroll-x"><table class="tbl"><tbody>
+      <tr><th>게임</th><td>견습 천사가 되어 성경 속 사람들을 돕는 <span class="hl">머지(합치기) 게임</span>. 같은 아이템 두 개를 합쳐 주문을 해결하고, 받은 달란트로 이야기 무대를 꾸며 장을 끝냅니다. (천지창조 · 노아 · 바벨탑 · 출애굽 · 다윗과 골리앗 · 오병이어, 6장)</td></tr>
+      <tr><th>결과물</th><td>Android APK (v1.4, 28MB) · Unity 6 프로젝트 · 점검보고서 · 이미지 시트 · 팀용 README</td></tr>
+      <tr><th>팀 구성</th><td>역할 분담: 기획 · 리소스 · UI · 코딩 · 시스템 · 사운드, 스토리는 다 같이</td></tr>
+      <tr><th>내 역할</th><td><b>기획 담당</b>. 기획 스케치에 함께 참여했고, v1.0 이후 개선(v1.1~v1.4)을 AI로 진행</td></tr>
+    </tbody></table></div>
+
+    <h3><span class="sn">1.2</span>무엇을 누가 했나</h3>
+    <div class="role">
+      <div class="card"><h4><span class="tag gray">팀</span>함께 만든 것</h4><ul class="dot">
+        <li>손그림 기획: 게임 구조, 6개 이야기, 재화(사랑·달란트), 화면 구성</li>
+        <li>첫 버전 v1.0 (HTML5 웹 빌드 + APK)</li>
+        <li>역할별 리소스·사운드 등 남은 과제 담당</li></ul></div>
+      <div class="card"><h4><span class="tag">나 + AI</span>이어서 한 것 (v1.1~v1.4)</h4><ul class="dot">
+        <li>기획서 대비 누락 점검, 버그 6건 수정, 밸런스 계산과 재설계</li>
+        <li>미국 매출 상위 머지 게임 3종 역기획 → 우리 게임에 맞는 제안 4개 반영</li>
+        <li>말씀 퀴즈, 팀 서명 열쇠 정리, Gemini로 그림 89장 교체</li>
+        <li>팀원이 Unity에서 바로 고칠 수 있게 역할별 README 작성</li></ul></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s2">
+  <div class="band"><div class="wrap"><div class="num">02</div><h2>출발점: 팀의 손그림 기획</h2><p>정식 기획서 없이 손그림 두 장으로 시작했습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="grid g2" style="align-items:start">
+      <figure><img src="assets/img/sketch_concept.png" alt="손그림 기획: 머지 보드와 이야기 목록" loading="lazy"><figcaption>머지 보드, 체력(사랑)·달란트, 천지창조·노아·바벨탑·출애굽·골리앗·오병이어</figcaption></figure>
+      <div>
+        <figure><img src="assets/img/sketch_title.png" alt="손그림 기획: 타이틀 화면" loading="lazy" style="max-width:320px"><figcaption>타이틀 '바이블 머지(가제)' + Start</figcaption></figure>
+        <h4>스케치에 담긴 요구사항</h4>
+        <ul class="dot">
+          <li>위쪽 무대에 <b>도와줄 사람들</b>, 아래쪽 <b>합치기 보드</b></li>
+          <li>체력 = 사랑, 화폐 = 달란트</li>
+          <li>바벨탑 부수기, 골리앗과 갑옷, 3D 배경, 방치형 요소</li>
+        </ul>
+        <p class="mute">AI 점검의 첫 단계는 이 스케치와 실제 게임을 한 줄씩 비교하는 것이었습니다 (4장).</p>
+      </div>
+    </div>
+    <h3><span class="sn">2.1</span>팀 첫 버전 v1.0</h3>
+    <div class="phone-row">
+      <figure class="shot"><img src="assets/img/shots/v1_title.jpg" alt="v1.0 타이틀" loading="lazy"><figcaption>타이틀</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/v1_board.jpg" alt="v1.0 보드" loading="lazy"><figcaption>주문 카드 + 합치기 보드</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/v1_shop.jpg" alt="v1.0 상점" loading="lazy"><figcaption>만나 상점</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/v1_settings.jpg" alt="v1.0 설정" loading="lazy"><figcaption>설정 (v1.0)</figcaption></figure>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s3">
+  <div class="band"><div class="wrap"><div class="num">03</div><h2>명령 기록: 10개 명령</h2><p>2026-11-19 ~ 11-20, Claude Code 대화에서 내가 쓴 명령 원문</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="cmds">
+      <details class="cmd" open><summary><span class="n">1</span><span class="d">11-19</span><span class="s">"이 기획서로 만든 게임이야. 학습해줘" (손그림 기획 PDF + Unity zip + APK 첨부)</span><span class="v">학습</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>기획 스케치, 게임 데이터(JSON), 코드 구조를 읽고 정리</div></div></div></details>
+      <details class="cmd" open><summary><span class="n">2</span><span class="d">11-19</span><span class="s">"이제부터 유니티로 만들고, apk파일을 보내줘. 기획서와 비교해서 빠진부분 점검하고, 버그와 밸런스를 점검해줘"</span><span class="v">점검보고서</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>기획 대비 누락표 11항목, 버그 6건, 장별 아이템·만나 수 계산으로 밸런스 문제 4건(B1~B4) 정리</div></div></div></details>
+      <details class="cmd"><summary><span class="n">3</span><span class="d">11-19</span><span class="s">"게임 이름 추천해주고 점검 사항 고쳐줘"</span><span class="v">v1.1</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>버그 6건 수정, 달란트 경제·보스 피해 공식·스토리 분량 재설계, 무대에 도와줄 인물 배치</div></div></div></details>
+      <details class="cmd"><summary><span class="n">4</span><span class="d">11-19</span><span class="s">(다른 세션) "미국에서 모바일 머지 게임 최고매출 순위 탑 3까지의 게임들의 역기획서를 작성해줘"</span><span class="v">역기획 3종</span></summary>
+        <div class="in"><div class="row"><span class="k">결과</span><div>가십 하버 · 트래블 타운 · 테이스티 트래블 머지 코어 루프 역기획서 (각 10개 장: 시스템 정의, 플로우, 수치 분석 등)</div></div></div></details>
+      <details class="cmd"><summary><span class="n">5</span><span class="d">11-20</span><span class="s">"그럼 지금은 하지말고, 이 역기획서들 분석해서, 내 게임에 적용하면 좋을 것들 작성해줘"</span><span class="v">제안서</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>세 게임의 공통 장치를 우리 게임 규모에 맞게 골라 '지금 / 나중' 제안으로 정리</div></div></div></details>
+      <details class="cmd"><summary><span class="n">6</span><span class="d">11-20</span><span class="s">"넣어줘"</span><span class="v">v1.2</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>'지금' 제안 4개 구현: 이야기 장면 꾸미기, 주문 아이템 위치 표시, 자유 모드 주문 배합, 보스 피해표. Unity 에디터에서 6장 전체를 코드로 자동 플레이해 점검</div></div></div></details>
+      <details class="cmd"><summary><span class="n">7</span><span class="d">11-20</span><span class="s">"게임 유니티로 수정할 수 있도록 파일 제작해줘"</span><span class="v">팀 README</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>Unity 프로젝트 정리 + "무엇을 어디서 고치나요?" 표와 <b>팀 역할별 수정 위치</b>를 담은 README</div></div></div></details>
+      <details class="cmd"><summary><span class="n">8</span><span class="d">11-20</span><span class="s">"apk 설치가 안돼. 문제가 뭐야?"</span><span class="v">원인 진단</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>기존 앱과 서명 열쇠가 달라 덮어 설치가 안 되는 것으로 진단</div></div></div></details>
+      <details class="cmd"><summary><span class="n">9</span><span class="d">11-20</span><span class="s">"같은 열쇠로 서명해줘"</span><span class="v">v1.3</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>모든 APK를 팀 열쇠로 자동 서명하는 에디터 스크립트 → 누가 빌드해도 기존 앱 위에 덮어 설치</div></div></div></details>
+      <details class="cmd"><summary><span class="n">10</span><span class="d">11-20</span><span class="s">"(UI 가이드.md 첨부) 말씀 퀴즈 넣어줘 … ui지침서 공유하고, 필요한 이미지 시트 작성해서 제미나이로 제작해서 이미지 퀄리티 올려줘"</span><span class="v">v1.3 · v1.4</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>말씀 퀴즈 30문제(v1.3), 이미지 시트 MD 작성 → Gemini 26번 요청으로 그림 89장 + 앱 아이콘 교체(v1.4)</div></div></div></details>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s4">
+  <div class="band"><div class="wrap"><div class="num">04</div><h2>AI 점검: 기획 대비 · 버그 · 밸런스</h2><p>"재미없다"가 아니라, 숫자로 원인을 찾고 고쳤습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">4.1</span>기획 스케치와 비교해 빠진 부분</h3>
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th>기획 내용</th><th>v1.0 상태</th><th>처리</th></tr></thead>
+      <tbody>
+        <tr><th>무대에 도와줄 사람들</th><td>1~3장 무대에 인물 없음</td><td>v1.1에서 장마다 인물 배치</td></tr>
+        <tr><th>바벨탑 부수기</th><td>벽돌 12개</td><td>v1.1에서 16개 + 주문 2개 추가</td></tr>
+        <tr><th>방치형</th><td>오프라인 만나 회복만 (약함)</td><td>v1.2 장면 꾸미기로 달란트 쓸 곳 추가</td></tr>
+        <tr><th>체력 = 사랑</th><td>이름이 '만나'로 바뀜</td><td><span class="tag gold">팀 결정 필요</span>로 남김</td></tr>
+        <tr><th>3D 배경 · 골리앗 갑옷 · 순위표</th><td>없음</td><td>그림·서버가 필요 → <span class="tag gold">리소스·사운드 담당</span>에게 넘김</td></tr>
+      </tbody></table></div>
+
+    <h3><span class="sn">4.2</span>버그 6건 (v1.1에서 수정)</h3>
+    <div class="grid g3">
+      <div class="card"><span class="badge">1</span><h4>진행 멈춤</h4><p>마지막 주문 직후 0.4초 안에 앱이 꺼지면, 다시 켰을 때 다음 장으로 안 넘어감</p></div>
+      <div class="card"><span class="badge">2</span><h4>만나가 멈춤</h4><p>휴대폰 시계가 뒤로 가면 다음 만나까지 며칠이 걸림 → 대기 20초 상한</p></div>
+      <div class="card"><span class="badge">3</span><h4>선물 두 번 받기</h4><p>타이틀 화면에서 2분 넘게 두면 '천사의 선물'이 두 번 지급</p></div>
+      <div class="card"><span class="badge">4</span><h4>투명한 주문 카드</h4><p>사라지는 애니메이션과 다시 그리기가 겹치면 카드가 거의 안 보임</p></div>
+      <div class="card"><span class="badge">5</span><h4>엉뚱한 주문 처리</h4><p>카드가 사라지는 0.4초 동안 누르면 다른 주문이 처리됨 → 입력 잠금</p></div>
+      <div class="card"><span class="badge">6</span><h4>알림 오류</h4><p>알림이 짧은 시간에 3개 넘게 뜨면 오류 로그 (바벨탑에서 자주)</p></div>
+    </div>
+
+    <h3><span class="sn">4.3</span>밸런스: 계산으로 찾은 문제 4개</h3>
+    <p>AI가 "L단계 아이템 1개 = 1단계 2<sup>L-1</sup>개"로 장마다 필요한 만나와 받는 만나·달란트를 계산했습니다.</p>
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th>#</th><th>문제 (v1.0)</th><th>고친 것</th></tr></thead>
+      <tbody>
+        <tr><th>B1</th><td>스토리에서 달란트 약 <b>1,450</b>을 받는데 만나 60개가 80달란트 → 2장부터 만나가 사실상 무한, 방치 요소가 의미 없음</td><td>만나 값 인상(80→<b>130</b>) + 영구 강화 2종(생성기 축복 1,600 · 큰 만나 항아리 680). 스토리 달란트 2,160 &lt; 강화 2,280 → <span class="hl">고르면서 쓰게</span></td></tr>
+        <tr><th>B2</th><td>보스 피해 = 2<sup>L-1</sup> → 합쳐서 던지든 따로 던지든 같아서 <b>합칠 이유가 없음</b></td><td>피해표 1·3·7·16·36·80 (1단계당 효율 1.0 → <span class="hl">2.5</span>), 체력 홍해 24→60 · 골리앗 32→80</td></tr>
+        <tr><th>B3</th><td>6장 전체가 30~40분이면 끝남, 바벨 장은 내용이 얇음</td><td>주문 29 → 36개, 바벨 벽돌 12 → 16개</td></tr>
+        <tr><th>B4</th><td>6단계 아이템이 스토리 주문에 한 번도 안 쓰임</td><td>추가 주문을 모두 6단계로 (해 · 노아의 방주 · 다윗의 물매 …)</td></tr>
+      </tbody></table></div>
+    <div class="box" style="margin-top:14px"><b>자동 플레이 검증 (v1.2)</b> — Unity 에디터에서 6장 + 자유 모드를 코드로 끝까지 진행: 게임 코드 오류 0, 홍해는 4단계 지팡이 4번 · 골리앗은 4단계 돌 5번에 쓰러짐. <span class="red">실제 휴대폰에서 누르는 느낌과 글자 크기는 검증하지 못했다고 기록</span>.</div>
+  </div></div>
+</section>
+
+<section class="part" id="s5">
+  <div class="band"><div class="wrap"><div class="num">05</div><h2>역기획 → 우리 게임에 반영</h2><p>미국 매출 상위 머지 게임 3종을 역기획하고, 그중 우리 규모에 맞는 것만 골랐습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="flow">
+      <div class="step ai"><b>역기획 3종</b><small>가십 하버 · 트래블 타운 · 테이스티 트래블 코어 루프 분석</small></div><div class="arr">→</div>
+      <div class="step ai"><b>적용 제안</b><small>"지금 하지 말고" 먼저 제안서로 받아 검토</small></div><div class="arr">→</div>
+      <div class="step me"><b>내 판단</b><small>'지금' 제안 4개 선택 → "넣어줘"</small></div><div class="arr">→</div>
+      <div class="step ai"><b>v1.2 구현 · 자동 점검</b><small>6장 자동 플레이로 수치 확인</small></div>
+    </div>
+    <h3><span class="sn">5.1</span>반영한 제안 4개 (v1.2)</h3>
+    <div class="grid g2" style="align-items:start">
+      <div class="scroll-x"><table class="tbl">
+        <thead><tr><th>제안</th><th>넣은 내용</th></tr></thead>
+        <tbody>
+          <tr><th>이야기 장면 꾸미기</th><td>장마다 장면 조각 4~6개(모두 26개). 주문을 도우면 열리고, 달란트로 무대에 놓으면 인물이 한마디. <b>장 완료 = 주문 + 보스 + 장면</b></td></tr>
+          <tr><th>주문 아이템 위치 표시</th><td>주문 카드를 누르면 보드의 그 아이템 칸이 1.8초 반짝. 없으면 가장 가까운 아래 단계나 생성기를 알려 줌</td></tr>
+          <tr><th>자유 모드 주문 배합</th><td>3칸을 쉬움 · 보통 · 어려움(금색, 보상 2배)으로 고정</td></tr>
+          <tr><th>보스 피해표</th><td>단계가 높을수록 늘 이득 (B2 해결)</td></tr>
+        </tbody></table></div>
+      <div class="grid g2">
+        <figure class="shot"><img src="assets/img/shots/v14_decor.jpg" alt="장면 꾸미기" loading="lazy"><figcaption>무대 꾸미기 조각</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/v14_hint.jpg" alt="주문 아이템 위치 표시" loading="lazy"><figcaption>주문 카드 → 위치 반짝</figcaption></figure>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s6">
+  <div class="band"><div class="wrap"><div class="num">06</div><h2>MD로 팀과 AI를 연결하기</h2><p>AI가 만든 결과를 팀원도 읽고 고칠 수 있게, 기준과 위치를 MD 파일로 남겼습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="grid g2">
+      <div class="card"><span class="tag">팀 협업</span><h4>README.md — 팀 역할별 수정 위치</h4><p>"무엇을 어디서 고치나요?" 표와 함께, <span class="hl">기획 → game_data.json, 리소스 → Sprites, UI → Game.UI.cs, 코딩 → Game.cs, 사운드 → Sfx.cs</span>처럼 역할별로 만질 파일을 정리했습니다. 코드를 몰라도 JSON만 고쳐 대사·주문·수치를 바꿀 수 있습니다.</p></div>
+      <div class="card"><span class="tag">검증 기록</span><h4>점검보고서.md — 버전별 변경과 계산</h4><p>기획 대비 누락표, 버그 6건, 밸런스 계산, v1.1~v1.4 변경표, 자동 플레이 결과와 <span class="hl">"점검이 못 본 것"</span>까지 한 파일에 쌓았습니다.</p></div>
+      <div class="card"><span class="tag">아트 지시서</span><h4>이미지_시트.md — Gemini 요청 26번</h4><p>그림 89장을 26묶음으로 나누고, 화풍·금지 사항·크기·파일명을 표로 고정했습니다. 작은 그림은 <span class="hl">한 장에 3×2칸(6개)</span>으로 그리게 해 같은 계열의 그림체를 맞췄습니다.</p></div>
+      <div class="card"><span class="tag">디자인 기준</span><h4>UI 가이드 MD — 그림에도 적용</h4><p>"색만으로 구분하지 않기"를 그림 규칙으로 옮겨, 아이템 단계가 색뿐 아니라 <span class="hl">크기·모양·장식 수</span>로 달라 보이게 했습니다.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s7">
+  <div class="band"><div class="wrap"><div class="num">07</div><h2>그림 교체: Gemini로 89장</h2><p>코드로 그린 그림을, 이미지 시트 MD 하나로 같은 화풍의 수채화로 바꿨습니다 (v1.4).</p></div></div>
+  <div class="body"><div class="wrap">
+    <figure><img src="assets/img/art_before_after.png" alt="그림 교체 전후 비교" loading="lazy"><figcaption>위: v1.0~v1.3 코드로 그린 그림 / 아래: v1.4 Gemini 컨셉 A (동화책 수채화)</figcaption></figure>
+    <div class="grid g2" style="margin-top:18px;align-items:start">
+      <figure><img src="assets/img/gemini_sheet_light.jpg" alt="Gemini 묶음 그림 예시" loading="lazy"><figcaption>묶음 그리기 예: '빛' 계열 6단계를 한 장에 → 칸별로 잘라 배경을 지움</figcaption></figure>
+      <figure><img src="assets/img/art_collection_v14.png" alt="v1.4 그림 모음" loading="lazy"><figcaption>v1.4 게임에 들어간 그림 모음</figcaption></figure>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s8">
+  <div class="band"><div class="wrap"><div class="num">08</div><h2>v1.0 vs v1.4: 같은 동선으로 비교</h2><p>두 버전을 같은 순서로 누르도록 스크립트로 자동 플레이해 녹화했습니다. v1.4는 Unity WebGL로 빌드해 브라우저에서 녹화했습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3 id="compare"><span class="sn">8.1</span>나란히 비교 영상 (50초)</h3>
+    <div class="video-main">
+      <video id="vCompare" controls playsinline preload="metadata" poster="assets/video/bm_compare_poster.jpg"><source src="assets/video/bm_compare.mp4" type="video/mp4"></video>
+      <div class="chips" id="cmpChips" aria-label="장면으로 이동"></div>
+    </div>
+    <p class="mute" style="margin-top:10px;font-size:14px">왼쪽 v1.0(팀 HTML5), 오른쪽 v1.4(Unity). 위쪽 파란 글씨가 그 장면에서 바뀐 점입니다. 흰 원은 자동 플레이가 누른 위치입니다.</p>
+
+    <h3><span class="sn">8.2</span>장면별로 달라진 점</h3>
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th>장면</th><th>v1.0</th><th>v1.4</th><th class="c">버전</th></tr></thead>
+      <tbody>
+        <tr><th>그림</th><td>코드로 그린 SVG</td><td>Gemini 동화책 수채화 89장 + 아이콘</td><td class="c">v1.4</td></tr>
+        <tr><th>경제</th><td>만나 상점뿐 → 달란트가 남아돎</td><td>만나 값 인상 + 영구 강화 2종</td><td class="c">v1.1</td></tr>
+        <tr><th>주문</th><td>29개, 6단계 미사용</td><td>36개, 장마다 6단계 마무리 주문</td><td class="c">v1.1</td></tr>
+        <tr><th>보스</th><td>합칠 이유 없음</td><td>단계별 피해표 (효율 최대 2.5배)</td><td class="c">v1.2</td></tr>
+        <tr><th>장면 꾸미기 · 위치 표시</th><td>없음</td><td>26조각 · 주문 카드 → 칸 반짝</td><td class="c">v1.2</td></tr>
+        <tr><th>말씀 퀴즈</th><td>없음</td><td>만나가 떨어지면 30문제 (정답 +6 · 오답 +2)</td><td class="c">v1.3</td></tr>
+        <tr><th>설치</th><td>기기마다 서명이 달라 덮어 설치 불가</td><td>팀 열쇠로 자동 서명</td><td class="c">v1.3</td></tr>
+      </tbody></table></div>
+
+    <h3><span class="sn">8.3</span>버전별 영상 따로 보기</h3>
+    <div class="duo">
+      <div class="vcard"><h4><span class="tag gray">v1.0</span> 팀 HTML5 · 25초</h4><video controls playsinline preload="none" poster="assets/video/bm_play_v1_poster.jpg"><source src="assets/video/bm_play_v1.mp4" type="video/mp4"></video></div>
+      <div class="vcard"><h4><span class="tag">v1.4</span> Unity 최종 · 45초</h4><video controls playsinline preload="none" poster="assets/video/bm_play_v14_poster.jpg"><source src="assets/video/bm_play_v14.mp4" type="video/mp4"></video></div>
+    </div>
+
+    <h3><span class="sn">8.4</span>v1.4 화면</h3>
+    <div class="phone-row">
+      <figure class="shot"><img src="assets/img/shots/v14_board.jpg" alt="v1.4 보드" loading="lazy"><figcaption>보드 · 주문 카드</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/v14_shop.jpg" alt="v1.4 상점" loading="lazy"><figcaption>상점 · 영구 강화 · 퀴즈</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/v14_quiz.jpg" alt="v1.4 말씀 퀴즈" loading="lazy"><figcaption>말씀 퀴즈</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/v14_book.jpg" alt="v1.4 이야기책" loading="lazy"><figcaption>성경 이야기책 6장</figcaption></figure>
+    </div>
+
+    <h3 id="play"><span class="sn">8.5</span>직접 플레이</h3>
+    <div class="play">
+      <div class="phone"><div class="screen" id="screen" style="background-image:url(assets/img/phone_v14.jpg)">
+        <div class="start"><button class="btn primary" id="startBtn" type="button">▶ 여기서 플레이</button></div>
+      </div></div>
+      <div>
+        <div class="tabs" role="tablist" aria-label="플레이할 버전">
+          <button class="tab" role="tab" aria-selected="false" data-v="v10.html" data-img="phone_v1.jpg" type="button">v1.0 · 팀 HTML5</button>
+          <button class="tab" role="tab" aria-selected="true" data-v="v14/index.html" data-img="phone_v14.jpg" type="button">v1.4 · Unity WebGL</button>
+        </div>
+        <p>v1.0은 팀의 웹 빌드, v1.4는 Unity 프로젝트를 WebGL로 빌드한 것입니다(처음 불러올 때 약 10MB).</p>
+        <ul class="dot">
+          <li>반짝이는 생성기를 눌러 아이템을 만들고, 같은 것 두 개를 끌어다 합칩니다.</li>
+          <li>주문 카드에 필요한 아이템을 만들면 [도와주기]로 이야기가 진행됩니다.</li>
+          <li>진행 상황은 이 브라우저에만 저장됩니다.</li>
+        </ul>
+        <div class="btns"><a class="btn primary" href="play/v14/index.html" target="_blank" rel="noopener">v1.4 새 창에서 열기</a><a class="btn" style="border:1px solid var(--line);color:var(--ink)" href="play/v10.html" target="_blank" rel="noopener">v1.0 새 창에서 열기</a></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s9">
+  <div class="band"><div class="wrap"><div class="num">09</div><h2>정리</h2><p>팀 프로젝트에서 AI를 쓴 방식과 남은 일</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="principles">
+      <div class="card"><span class="badge">1</span><b>먼저 점검, 그다음 수정</b><small>"고쳐줘" 전에 기획 대비·버그·밸런스를 보고서로 받아 무엇을 고칠지 정했다.</small></div>
+      <div class="card"><span class="badge">2</span><b>숫자로 설명</b><small>"재미없다" 대신 달란트 1,450 vs 만나 값처럼 계산으로 원인을 보였다.</small></div>
+      <div class="card"><span class="badge">3</span><b>제안은 고르고 넣기</b><small>역기획 제안을 바로 넣지 않고 '지금/나중'으로 나눠 판단했다.</small></div>
+      <div class="card"><span class="badge">4</span><b>팀이 이어받을 수 있게</b><small>README·이미지 시트를 MD로 남겨 팀원 역할별로 바로 고칠 수 있게 했다.</small></div>
+      <div class="card"><span class="badge">5</span><b>확인한 것만 보고</b><small>자동 점검이 못 본 손맛·글자 크기는 '미검증'으로 남겼다.</small></div>
+    </div>
+    <h3><span class="sn">9.1</span>남은 일 (팀 역할별)</h3>
+    <div class="scroll-x"><table class="tbl"><thead><tr><th>담당</th><th>남은 일</th></tr></thead><tbody>
+      <tr><th>리소스</th><td>3D 배경, 다윗의 갑옷 아이템, 바벨 전용 생성기와 아이템 6개 그림</td></tr>
+      <tr><th>사운드</th><td>코드로 합성한 임시 소리를 실제 효과음·배경음악으로</td></tr>
+      <tr><th>서버</th><td>스케치에 있던 순위표</td></tr>
+      <tr><th>기획 (팀 결정)</th><td>체력 이름: 사랑 / 만나</td></tr>
+    </tbody></table></div>
+  </div></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>〈바이블 머지〉 팀 프로젝트 · AI 개선 기록</b> · 김다운 (기획) · 2026<br>
+    근거 자료: 팀 손그림 기획 · 점검보고서.md · 이미지_시트.md · Unity 프로젝트 README · Claude Code 대화 기록
+    <br><a href="../" style="color:#ffd36b">← 포트폴리오 목록</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const CH = [["title","타이틀",2.2],["story","장 시작",6],["gen","생성기",11],["merge","합치기",15.4],["order","주문",23.2],["hint","위치 표시",26.4],["decor","장면 꾸미기",29.6],["shop","상점",33.3],["quiz","말씀 퀴즈",36.5],["book","이야기책",42.5],["settings","설정",46]];
+  const v = document.getElementById('vCompare'), box = document.getElementById('cmpChips');
+  const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  CH.forEach(([k, n, t]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.innerHTML = `<span class="t">${fmt(t)}</span>${n}`; b.onclick = () => { v.currentTime = t + 0.05; v.play().catch(() => {}); }; box.appendChild(b); });
+  v.addEventListener('timeupdate', () => { let cur = -1; CH.forEach(([, , t], i) => { if (v.currentTime >= t) cur = i; }); box.querySelectorAll('.chip').forEach((b, i) => b.classList.toggle('on', i === cur)); });
+})();
+(() => {
+  let ver = 'v14/index.html';
+  const screen = document.getElementById('screen'), tabs = document.querySelectorAll('.tab');
+  const load = () => { screen.innerHTML = `<iframe src="play/${ver}" title="바이블 머지" allow="autoplay"></iframe>`; };
+  document.getElementById('startBtn').onclick = load;
+  tabs.forEach(t => t.onclick = () => { ver = t.dataset.v; tabs.forEach(x => x.setAttribute('aria-selected', String(x === t))); screen.style.backgroundImage = `url(assets/img/${t.dataset.img})`; if (screen.querySelector('iframe')) load(); });
+})();
+(() => {
+  const links = [...document.querySelectorAll('.toc a')], secs = links.map(a => document.querySelector(a.getAttribute('href')));
+  const on = () => { let i = 0; secs.forEach((s, k) => { if (s.getBoundingClientRect().top < 120) i = k; }); links.forEach((a, k) => a.classList.toggle('on', k === i && window.scrollY > 300)); };
+  addEventListener('scroll', on, { passive: true }); on();
+})();
+</script>
+</body>
+</html>
