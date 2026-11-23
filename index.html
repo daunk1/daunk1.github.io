@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김다운 — AI Game Maker 포트폴리오</title>
+<meta name="description" content="AI로 게임을 만들고, 기록하고, 검증한 과정을 정리한 포트폴리오">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="dungeon-capitalist/assets/site.css">
+<style>
+  .hero { background-image: url(dungeon-capitalist/assets/img/bg_title.jpg); padding: 88px 0 64px; }
+  .hero .wrap { grid-template-columns: 1fr; }
+  .works { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .work { display: block; background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); color: inherit; text-decoration: none !important; transition: transform .15s, box-shadow .15s; }
+  .work:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(27, 36, 64, .14); }
+  .work img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
+  .work .in { padding: 18px 22px 22px; }
+  .work h2 { margin: 6px 0 6px; font-size: 22px; color: var(--navy); }
+  .work p { margin: 0 0 10px; color: var(--ink); }
+  @media (max-width: 760px) { .works { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .work { transition: none; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap"><div>
+    <span class="kicker">AI GAME MAKER PORTFOLIO</span>
+    <h1>AI로 만들고, 기록하고, 검증한 게임</h1>
+    <p class="lead">방향과 판단은 제가, 구현·문서·테스트의 반복은 AI가 맡았습니다. 각 프로젝트에서 실제로 쓴 명령, 바뀐 과정, 첫 버전과 최종 버전 비교 영상을 정리했습니다.</p>
+    <div class="who">김다운 · Claude Code · Unity 6 · Gemini</div>
+  </div></div>
+</header>
+<main class="body"><div class="wrap">
+  <div class="works">
+    <a class="work" href="dungeon-capitalist/">
+      <img src="dungeon-capitalist/assets/video/compare_v1_v8_poster.jpg" alt="던전 앞 자본주의 상점가 v1·v8 비교">
+      <div class="in"><span class="tag">개인 프로젝트</span><span class="tag gray">방치형 타이쿤 RPG</span>
+        <h2>〈던전 앞 자본주의 상점가〉</h2>
+        <p>초안 기획서 한 장에서 명령 20개로 웹·Android·Unity 게임을 만들고, 기획서 4종을 8개 버전으로 쌓은 기록</p>
+        <span class="hl">보기 →</span></div>
+    </a>
+    <a class="work" href="bible-merge/">
+      <img src="bible-merge/assets/video/bm_compare_poster.jpg" alt="바이블 머지 v1.0·v1.4 비교">
+      <div class="in"><span class="tag">팀 프로젝트 · 기획</span><span class="tag gray">머지 퍼즐</span>
+        <h2>〈바이블 머지〉</h2>
+        <p>팀이 손그림으로 기획한 게임을 AI로 점검·밸런스 재설계·역기획 반영·그림 교체까지 이어 간 기록</p>
+        <span class="hl">보기 →</span></div>
+    </a>
+  </div>
+</div></main>
+<footer><div class="wrap"><b>김다운</b> · AI Game Maker 포트폴리오 · 2026</div></footer>
+</body>
+</html>
