@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>던전 앞 자본주의 상점가 — AI 제작 포트폴리오</title>
+<meta name="description" content="초안 기획서 한 장에서 시작해 명령 20개로 웹·Android·Unity 게임과 기획서 8개 버전을 만든 AI 활용 제작 기록">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/img/sprite/spr_logo_emblem.png">
+</head>
+<body>
+
+<!-- ============ 표지 ============ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="kicker">AI GAME MAKER PORTFOLIO · 게임 제작 1</span>
+      <h1>〈던전 앞 자본주의 상점가〉<br>AI로 만들고, 기록하고, 검증한 과정</h1>
+      <p class="lead">초안 기획서 한 장에서 시작해 <b>명령 20개</b>로 웹·Android·Unity 게임을 만들고, 바뀐 내용을 <b>기획서 8개 버전</b>에 빠짐없이 쌓았습니다.</p>
+      <div class="who">김다운 · 2026.11.13 – 11.23 · Claude Code · Unity 6 · Node.js</div>
+      <div class="stats">
+        <div class="stat"><b>20</b><span>명령 (변경이력 기준)</span></div>
+        <div class="stat"><b>4종 × 8버전</b><span>기획서 (docx·pptx 64개)</span></div>
+        <div class="stat"><b>99종</b><span>스프라이트</span></div>
+        <div class="stat"><b>54장</b><span>자동 촬영 검증 화면</span></div>
+      </div>
+      <div class="btns">
+        <a class="btn primary" href="#compare">▶ v1 · v8 비교 영상</a>
+        <a class="btn ghost" href="#play">직접 플레이</a>
+      </div>
+    </div>
+    <img class="emblem pix" src="assets/img/sprite/spr_logo_emblem.png" alt="">
+  </div>
+</header>
+
+<nav class="toc" aria-label="목차">
+  <div class="wrap">
+    <a href="#s1">1. 개요</a><a href="#s2">2. 출발점</a><a href="#s3">3. 제작 체계</a><a href="#s4">4. 명령 기록</a><a href="#s5">5. MD 활용</a><a href="#s6">6. 기획서 구조</a><a href="#s7">7. 기획서 작동</a><a href="#s8">8. 검증 루프</a><a href="#s9">9. v1 vs v8</a><a href="#s10">10. 정리</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ 1. 개요 ============ -->
+<section class="part" id="s1">
+  <div class="band"><div class="wrap"><div class="num">01</div><h2>개요</h2><p>무엇을 만들었고, 나와 AI가 각각 무엇을 했는지</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">1.1</span>한눈에 보기</h3>
+    <div class="scroll-x"><table class="tbl">
+      <tbody>
+        <tr><th>게임</th><td>마을 상권 경영 타이쿤 × 헌터 방치형 RPG (세로 9:16 모바일). 용사들이 사냥하고 돌아오면, 영주인 플레이어가 상점가에서 <span class="hl">바가지 요금</span>으로 물건을 팔아 마을과 용사단을 함께 키웁니다.</td></tr>
+        <tr><th>결과물</th><td>웹 단일 HTML (272KB) · Android APK (21.9MB) · Unity 6 프로젝트 · 기획서 4종 × 8버전 (docx·pptx 64개) · 변경이력.xlsx</td></tr>
+        <tr><th>기간</th><td>2026-11-13 ~ 11-23 (작업한 날 6일)</td></tr>
+        <tr><th>내가 한 일</th><td>초안 기획서 작성 · <span class="hl">명령 작성</span> · 개선 우선순위 결정 · AI의 확인 질문에 답 · 결과 플레이와 판단</td></tr>
+        <tr><th>AI가 한 일</th><td>웹·Unity 구현 · 스프라이트 제작 · APK 빌드 · 기획서 생성 · 자동 플레이 검증 · APK 실행 테스트와 개선안 작성 (Claude Code 여러 세션)</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3><span class="sn">1.2</span>이 포트폴리오에서 보여 주려는 것</h3>
+    <div class="grid g3">
+      <div class="card"><span class="badge">1</span><h4>명령으로 만든다</h4><p>기능·수치·예외를 문장으로 정확히 적어 AI에게 맡기고, 모호한 부분은 AI가 <span class="hl">해석을 기록</span>하게 했습니다. <a href="#s4">→ 4장</a></p></div>
+      <div class="card"><span class="badge">2</span><h4>규칙은 MD로 고정한다</h4><p>스프라이트 규격표, UI 가이드, 기획서 규칙을 <span class="hl">MD 파일</span>로 만들어 세션이 바뀌어도 같은 기준을 지키게 했습니다. <a href="#s5">→ 5장</a></p></div>
+      <div class="card"><span class="badge">3</span><h4>AI 결과는 다시 검증한다</h4><p>다른 AI 세션이 APK를 직접 플레이해 개선안을 쓰고, 그 결과를 다시 명령으로 넣는 <span class="hl">검증 루프</span>를 돌렸습니다. <a href="#s8">→ 8장</a></p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 2. 출발점 ============ -->
+<section class="part" id="s2">
+  <div class="band"><div class="wrap"><div class="num">02</div><h2>출발점: 내가 쓴 초안 기획서</h2><p>AI에게 준 것은 기획서 1개, 참고 이미지 6장, 스프라이트 가이드 1개, 그리고 명령 한 문단이었습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">2.1</span>초안 기획서 구성 (5장)</h3>
+    <div class="grid g2" style="align-items:start">
+      <div class="scroll-x"><table class="tbl">
+        <thead><tr><th>장</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><th>1. 프로젝트 개요</th><td>장르·플랫폼, 레퍼런스, 아트·카메라, 수익 모델</td></tr>
+          <tr><th>2. 화면 구성</th><td>상단 HUD · 사냥터 · 상점가 · 하단 5탭 독 (9:16 세로)</td></tr>
+          <tr><th>3. 재화 3종 순환</th><td>부산물 → 골드 → 명성 인장의 유입·소비·병목</td></tr>
+          <tr><th>4. 시스템 설정</th><td>상점·바가지·고블린, 이중 가챠·대장간 품질·레이드, BM 상품</td></tr>
+          <tr><th>5. Stage 1~20</th><td>구간별 몬스터·해금 건물·리텐션 훅</td></tr>
+        </tbody>
+      </table></div>
+      <figure><img src="assets/img/docs/cum_draft.png" alt="초안 기획서 1장: 프로젝트 개요 표"><figcaption>초안 원문은 누적 기획서 1~5장에 그대로 옮기고, 수정하지 않았습니다.</figcaption></figure>
+    </div>
+
+    <h3><span class="sn">2.2</span>첫 명령 (원문)</h3>
+    <div class="quote"><span class="who">명령 ① · 2026-11-13 · 첨부: 초안 기획서.docx, 스프라이트 배치표·AI 프롬프트 가이드.md, 플레이어블 시안.html, 참고 이미지 6장</span>
+      기획서를 바탕으로 게임을 제작해줘. 이미지들을 참고하여 <mark>부족한 이미지와 스프라이트들은 세션2에서 제작해.</mark> <mark>전투장면이 로비화면이고, 상권 입장하는 버튼으로 상권 씬에 입장해.</mark> 제작한 이미지들로 게임에서의 씬들을 제작하고 <mark>통일감을 줘.</mark><br>
+      모바일게임으로 제작하고 싶어. <mark>실행파일과 유니티로 수정 가능한 파일로 제공해줘</mark></div>
+    <div class="grid g4" style="margin-top:16px">
+      <div class="box"><b>역할 분담</b><br><small class="mute">아트는 별도 세션(세션2)에 맡겨 코드 작업과 동시에 진행</small></div>
+      <div class="box"><b>화면 구조</b><br><small class="mute">초안의 '상하 분할 단일 화면'을 로비(전투)·상점가 2씬으로 바꿈</small></div>
+      <div class="box"><b>통일감</b><br><small class="mute">모든 그림이 같은 규격·팔레트를 따르도록 요구</small></div>
+      <div class="box"><b>결과 형태</b><br><small class="mute">바로 실행할 파일 + Unity에서 고칠 수 있는 프로젝트</small></div>
+    </div>
+
+    <h3><span class="sn">2.3</span>첫 명령의 결과</h3>
+    <ul class="dot">
+      <li><b>웹 빌드 + Unity 프로젝트</b>: 화면을 코드가 만들도록 해서 두 버전이 같은 규칙을 공유합니다. Unity는 씬 자동 생성·원클릭 빌드 메뉴를 포함합니다.</li>
+      <li><b>스프라이트 99종</b>: 아트 세션이 64색 공통 팔레트로 그렸습니다. Python·Aseprite가 없는 PC라서 Node.js로 PNG 저장기부터 직접 만들어 코드로 그렸습니다.</li>
+      <li><b>밸런스</b>: 자동 플레이 시뮬레이션으로 첫 보스 레이드(켈베로스) 토벌까지 <span class="hl">약 33~37분</span>이 되도록 맞췄습니다.</li>
+      <li><b>초안과 달라진 점</b>은 이유와 함께 기록했습니다. 예: 방어구점을 대장간에 통합, 주점 소환 임계치 조정, 오프라인 통행세 1/10 (누적 기획서 6.3절).</li>
+    </ul>
+    <div class="phone-row" style="margin-top:14px">
+      <figure class="shot"><img src="assets/img/shots/04_town.png" alt="상점가 화면" loading="lazy"><figcaption>상점가</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/05_shop_potion.png" alt="포션점 관리 창" loading="lazy"><figcaption>건물 관리 · 바가지 가격</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/07_tab_gacha.png" alt="용사 초빙 화면" loading="lazy"><figcaption>용사 초빙 (가챠)</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/08_tab_forge.png" alt="대장간 공정 화면" loading="lazy"><figcaption>대장간 품질 감정</figcaption></figure>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 3. 제작 체계 ============ -->
+<section class="part" id="s3">
+  <div class="band"><div class="wrap"><div class="num">03</div><h2>제작 체계: 일을 세션별로 나눠 맡기기</h2><p>한 대화에 모든 일을 몰지 않고, 역할이 다른 AI 세션이 파일로 결과를 주고받게 했습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">3.1</span>세션 구성</h3>
+    <div class="sessions">
+      <div class="col">
+        <div class="node me"><div class="t">나 (기획자)</div><small>초안 기획 · 명령 · 우선순위 결정 · 결과 판단</small><span class="io">입력: 개선안.md · 확인 질문</span></div>
+        <div class="node"><div class="t">아트 세션</div><small>규격표대로 스프라이트 99종을 코드로 제작 (ArtTools)</small><span class="io">계약: SPRITE_MANIFEST.md</span></div>
+      </div>
+      <div class="col">
+        <div class="node main"><div class="t">메인 세션 (게임 제작)</div><small>웹 game.js · Unity C# 구현, APK 빌드, 개선안 반영, 웹·Unity 수치 일치 확인</small><span class="io">결과: HTML · APK · Unity 프로젝트</span></div>
+      </div>
+      <div class="col">
+        <div class="node"><div class="t">문서 세션</div><small>기획서 4종 생성, 헤드리스 Chrome 자동 촬영, 변경이력 기록</small><span class="io">규칙: 기획서/README.md</span></div>
+        <div class="node"><div class="t">QA 세션</div><small>APK를 BlueStacks에서 직접 플레이 + REA로 APK 분석 → 개선안 작성</small><span class="io">결과: 개선안 v1 · v2 .md</span></div>
+      </div>
+    </div>
+
+    <h3><span class="sn">3.2</span>사용한 도구</h3>
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th>도구</th><th>쓴 곳</th></tr></thead>
+      <tbody>
+        <tr><th>Claude Code</th><td>모든 세션 (구현·아트·문서·QA). 세션끼리는 MD 파일과 결과물 파일로 연결</td></tr>
+        <tr><th>REA (리버스 엔지니어링 도구)</th><td>빌드된 APK의 IL2CPP 메타데이터·서명·매니페스트 분석 (QA 세션)</td></tr>
+        <tr><th>BlueStacks</th><td>APK 실기 실행 테스트 (25분 플레이, 뒤로 가기·저장 유지 확인)</td></tr>
+        <tr><th>헤드리스 Chrome (CDP)</th><td>웹 빌드를 자동 조작해 검증하고 기획서용 화면 54장 촬영</td></tr>
+        <tr><th>Node.js (docx · pptxgenjs · exceljs)</th><td>기획서 docx·pptx와 변경이력 xlsx 생성</td></tr>
+        <tr><th>Unity 6 (IL2CPP · ARM64)</th><td>Android APK 빌드 (30MB 전송 한도에 맞춰 20MB로 최적화)</td></tr>
+      </tbody>
+    </table></div>
+  </div></div>
+</section>
+
+<!-- ============ 4. 명령 기록 ============ -->
+<section class="part" id="s4">
+  <div class="band"><div class="wrap"><div class="num">04</div><h2>명령 기록: 20개 명령이 게임을 바꾼 순서</h2><p>모든 명령은 변경이력.xlsx에 날짜·원문·수정 사항·검증 결과와 함께 남아 있습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">4.1</span>단계별 흐름</h3>
+    <div class="phases">
+      <div class="phase"><span class="d">11-13 ~ 14 · ①~⑤</span><b>초안 → 첫 빌드</b><span class="v">웹 · Unity · APK</span><small>게임 제작, APK 빌드, 용량 최적화</small></div>
+      <div class="phase"><span class="d">11-14 · ⑥~⑦</span><b>AI 테스트 개선 1차</b><span class="v">개선안 v1 반영</span><small>QA 세션이 찾은 문제 수정, 웹 동기화</small></div>
+      <div class="phase"><span class="d">11-16 · ⑧</span><b>문서 체계 만들기</b><span class="v">기획서 v1</span><small>기획서 4종 · 변경이력 · 버전 규칙</small></div>
+      <div class="phase"><span class="d">11-16 · ⑨~⑩</span><b>기능 확장</b><span class="v">기획서 v2</span><small>보관함 · 분해 · 일괄/목표 감정</small></div>
+      <div class="phase"><span class="d">11-17 · ⑪~⑬</span><b>UI 표준 적용</b><span class="v">기획서 v3</span><small>UI 가이드 MD 학습 → 접근성 보완</small></div>
+      <div class="phase"><span class="d">11-17 · ⑭</span><b>편의 · 상점</b><span class="v">기획서 v4</span><small>인벤토리 · 설정 · 버튼 위치 · 상점</small></div>
+      <div class="phase"><span class="d">11-18 · ⑮~⑰</span><b>AI 테스트 개선 2차</b><span class="v">기획서 v5 · v6</span><small>개선안 v2 반영, 레이드 잠김 알림</small></div>
+      <div class="phase"><span class="d">11-23 · ⑱~⑳</span><b>경쟁작 비교 개선</b><span class="v">기획서 v7 · v8</span><small>신화 천장 · 정산 조작 방지 · 확률 정보</small></div>
+    </div>
+
+    <h3><span class="sn">4.2</span>명령 전체 <small class="mute" style="font-size:14px;font-weight:600">(눌러서 펼치기)</small></h3>
+    <div class="cmds">
+      <details class="cmd"><summary><span class="n">1</span><span class="d">11-13</span><span class="s">기획서를 바탕으로 게임 제작 (세션2에서 스프라이트, 로비 = 전투, 상권 입장 버튼, 모바일, 실행파일 + Unity)</span><span class="v">첫 빌드</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>HTML5 모바일 빌드 + Unity 프로젝트, 세션2가 스프라이트 99종 제작, 상점 6종·층 보스 Stage 3/8/15·Stage 16 켈베로스 60초 레이드 구현</div></div>
+        <div class="row"><span class="k">검증</span><div>자동 플레이 시뮬레이션으로 밸런스 조정 (첫 켈베로스 토벌 약 33~37분)</div></div></div></details>
+      <details class="cmd sub"><summary><span class="n">2</span><span class="d">11-14</span><span class="s">"유니티 설치했어. apk파일 만들어줘"</span><span class="v">빌드</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>배치 빌드 시도 → Unity 라이선스 미활성화로 실패 → Personal 라이선스 활성화 요청</div></div></div></details>
+      <details class="cmd sub"><summary><span class="n">3</span><span class="d">11-14</span><span class="s">"됐어"</span><span class="v">빌드</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>한글 경로에서 Android 빌드 실패 → 영문 경로로 복사해 빌드 성공 (47MB)</div></div></div></details>
+      <details class="cmd sub"><summary><span class="n">4</span><span class="d">11-14</span><span class="s">"빌드 다 됐어? / 끝나면 알려줘"</span><span class="v">빌드</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>빌드 진행 확인 후 완료 보고</div></div></div></details>
+      <details class="cmd sub"><summary><span class="n">5</span><span class="d">11-14</span><span class="s">"파일을 보내줘"</span><span class="v">APK 20MB</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>전송 한도 30MB에 맞춰 ARM64 전용·코드 스트리핑 High·미사용 패키지 제거 → 20MB로 재빌드</div></div></div></details>
+      <details class="cmd"><summary><span class="n">6</span><span class="d">11-14</span><span class="s">"이 개선안에 따라 개선해주고, 로비화면에서 뒤로 가기 시 자동저장 및 종료하시겠습니까 팝업…"</span><span class="v">개선안 v1</span></summary>
+        <div class="in"><div class="row"><span class="k">입력</span><div class="q">QA 세션이 BlueStacks에서 25분 플레이하고 REA로 APK를 분석해 쓴 <b>개선안 v1.md</b> (발견 A~H, 우선순위 10개)</div></div>
+        <div class="row"><span class="k">AI가 한 일</span><div>10연 정원 초과 사전 확인, 재고 20% 이하 말풍선·소진 알림, 파업 배너·분수대 연설, 슬라이더 창 닫힘 버그 수정, 0.3초 연타 방지, 다음 목표 패널, 초반 오프라인 수익, Android 뒤로 가기 체계 (모달 → 드로어 → 상권 → 종료 확인)</div></div>
+        <div class="row"><span class="k">검증</span><div>APK 재빌드 → BlueStacks에서 뒤로 가기·종료·저장 유지·슬라이더 확인. 보류 8건(코드 분리, 밸런스 외부화 등)은 따로 기록</div></div></div></details>
+      <details class="cmd sub"><summary><span class="n">7</span><span class="d">11-14</span><span class="s">"웹 버전에도 똑같이 반영해줘"</span><span class="v">웹 동기화</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>game.js에 ⑥과 같은 변경 반영. 웹 뒤로 가기는 브라우저 뒤로/Esc로 대응</div></div></div></details>
+      <details class="cmd"><summary><span class="n">8</span><span class="d">11-16</span><span class="s">"초안기획서를 변경하지 말고 … 기획서를 ppt와 doc으로 … 앞에 내용은 그대로 두고 뒤에 추가 … 엑셀로 명령어·수정사항·결과·날짜 정리"</span><span class="v">기획서 v1</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>누적·시스템·세부·콘텐츠 기획서 4종(docx·pptx), 변경이력.xlsx, 버전 규칙 README, 재생성 도구(_도구) 제작. 초안 양식(표지 → 번호 장 → 3열 표)을 그대로 따름</div></div>
+        <div class="row"><span class="k">검증</span><div>Word·PowerPoint로 렌더링해 한글 표시·표 넘침 확인. 수치는 게임 코드(Data.cs·Game.cs)에서 옮긴 값으로 계산</div></div></div></details>
+      <details class="cmd"><summary><span class="n">9</span><span class="d">11-16</span><span class="s">용사 보관함(최대 1,000명, 구간별 확장 비용) · 무기 분해·보관함 · 공정 결과 선택 · 10/100회 감정 · 목표 등급까지 감정</span><span class="v">기획서 v2</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>용사·무기 보관함, 분해 보상 공식, 결과 창(장착/보관/분해), 1·10·100회 일괄 감정(10% 할인), 목표 등급 감정(최대 500회), 10×10 결과 격자와 품질 일괄 선택</div></div>
+        <div class="row"><span class="k">검증</span><div>웹에서 100회 결과 선택 분해, 전설 목표 6회째 달성, 확장 비용표 전 구간, 저장 후 새로 고침 유지, 콘솔 오류 0건</div></div></div></details>
+      <details class="cmd sub"><summary><span class="n">10</span><span class="d">11-16</span><span class="s">(⑨ 후속) Android APK 빌드 결과</span><span class="v">APK</span></summary>
+        <div class="in"><div class="row"><span class="k">검증</span><div>BlueStacks: 10연 → 2명 출전·8명 보관함, 분해 보상이 세부 기획서 9.3절 값과 일치</div></div></div></details>
+      <details class="cmd"><summary><span class="n">11</span><span class="d">11-17</span><span class="s">"UI 용어 24종과 공통 설계 가이드.md 학습해줘"</span><span class="v">UI 기준</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>가이드를 프로젝트 참고자료 폴더에 저장하고, 이후 모든 UI 작업의 기준으로 삼기로 함</div></div></div></details>
+      <details class="cmd"><summary><span class="n">12</span><span class="d">11-17</span><span class="s">"그리고 반영해서 수정해줘"</span><span class="v">기획서 v3</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>기존 디자인 유지 + 부족한 부분만 보완: 팝업 초점 가두기·복귀, 키보드 조작, 하단 탭 선택 표시선, 움직임 줄이기 설정 대응</div></div>
+        <div class="row"><span class="k">검증</span><div>Tab 순환 22개 요소, Esc로 닫으면 연 버튼으로 초점 복귀. <span class="red">움직임 줄이기는 실기기에서 확인하지 못했다고 기록</span></div></div></div></details>
+      <details class="cmd sub"><summary><span class="n">13</span><span class="d">11-17</span><span class="s">(⑫ 후속) Android APK 빌드 결과</span><span class="v">APK</span></summary>
+        <div class="in"><div class="row"><span class="k">검증</span><div>BlueStacks: 선택 탭(금색) 아래 흰 표시선 확인</div></div></div></details>
+      <details class="cmd"><summary><span class="n">14</span><span class="d">11-17</span><span class="s">보관함 영주 레벨 연동 · 영주 금고 = 인벤토리 · 설정 창 · 버튼 위치 · 상점(현금·재화·광고)</span><span class="v">기획서 v4</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>영주 Lv.3/5/8/10에 보관함 자동 확장, 재화 6칸 인벤토리와 상세 창, 설정(영주 장부·사운드·처음부터), 상점 신설(영구권·광고·교환·충전 데모). 교환은 되팔기 이득이 없도록 역방향을 비싸게 설계</div></div></div></details>
+      <details class="cmd"><summary><span class="n">15</span><span class="d">11-18</span><span class="s">"stage 16부터 … 경고창은 가운데에서 … 이 개선안으로 개선해서 보내줘. unity 파일도 수정해줬으면 좋겠어"</span><span class="v">기획서 v5</span></summary>
+        <div class="in"><div class="row"><span class="k">입력</span><div class="q">QA 세션의 <b>개선안 v2.md</b> (업데이트 빌드 검토: 1-1 ~ 1-7)</div></div>
+        <div class="row"><span class="k">AI가 한 일</span><div>재고 상한을 Stage에 비례, 주점·온천 불만도 30% 감소 + 3분 쿨다운, 보충 아이콘 즉시 보충, 상권 등급 진행도, 목표 감정 도달 확률 경고, 첫 10연 할인, APK versionCode 자동 증가</div></div></div></details>
+      <details class="cmd"><summary><span class="n">16</span><span class="d">11-18</span><span class="s">"Stage 16 전에 레이드를 누르면 빨간 알림을 가운데 위쪽에서 뜰 수 있게 해줘"</span><span class="v">기획서 v6</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>v5의 가운데 창(모달)을 없애고, 2.5초 뒤 사라지는 빨간 알림을 화면 세로 1/3 지점에 표시. 게임을 멈추지 않음</div></div></div></details>
+      <details class="cmd sub"><summary><span class="n">17</span><span class="d">11-18</span><span class="s">(⑯ 후속) APK 빌드 결과</span><span class="v">APK</span></summary>
+        <div class="in"><div class="row"><span class="k">검증</span><div>빌드 결과를 기록하다가 세부 기획서 v5의 versionCode 예시 오류(UTC 기준)를 발견 → 다음 버전(v7)에서 정정</div></div></div></details>
+      <details class="cmd"><summary><span class="n">18</span><span class="d">11-23</span><span class="s">"여기서 개선할 점에서 첫번째 개선해줘" (경쟁작 비교 분석 보고서 F1)</span><span class="v">기획서 v7</span></summary>
+        <div class="in"><div class="row"><span class="k">입력</span><div class="q">넷마블네오 〈나 혼자만 레벨업: 어라이즈〉 성장 루프 분석 보고서 11.4절 — "최고 등급이 250회 동안 잠겨 있고 천장이 없다"</div></div>
+        <div class="row"><span class="k">AI가 한 일</span><div>신화를 1회차부터 0.5%로 개방, 주점 Lv은 확률 보너스로 변경, 신화 천장 120회(100회부터 회당 +5%p), 소환 화면에 "신화 확정까지 n회" 표시</div></div>
+        <div class="row"><span class="k">검증</span><div>확률표 합계 100% (40가지 조합), 20만 회 시뮬레이션 신화 평균 81.6회 · 최대 간격 114회</div></div></div></details>
+      <details class="cmd"><summary><span class="n">19</span><span class="d">11-23</span><span class="s">"2번째 개선사항을 고치는데, 오프라인 최대보상은 2시간 기준이고, 추후 추가될 강화 시스템으로 늘어날 수 있도록…"</span><span class="v">기획서 v8</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>오프라인 정산 한도 통합(기본 120분 + 강화 보너스 + 패스), 강화 시스템 연결 구조(항목 0개로 시작), 서버 시각 + 단조 시계, 30분 정산 간격, 저장 서명(HMAC-SHA256)과 변조 시 백업 복원</div></div>
+        <div class="row"><span class="k">검증</span><div>SHA-256·HMAC 표준 예제 일치, 3시간 부재 → 2시간분만 정산, 시계 되돌림 0G, 저장본 골드 수정 → 변조 감지·백업 복원</div></div></div></details>
+      <details class="cmd"><summary><span class="n">20</span><span class="d">11-23</span><span class="s">"3번째 개선사항도 진행하는데, 왼쪽 상단에 ? 버튼을 통해 확인할 수 있도록 해줘."</span><span class="v">기획서 v8</span></summary>
+        <div class="in"><div class="row"><span class="k">AI가 한 일</span><div>용사 초빙 창 왼쪽 위 [?] 버튼 → 「확률 정보」 창 5구역 (등급·주점 레벨별·직업·성향·보장 규칙)</div></div>
+        <div class="row"><span class="k">검증</span><div>표의 확률식이 실제 소환 코드와 같은지 문서 세션이 대조</div></div></div></details>
+    </div>
+
+    <h3><span class="sn">4.3</span>명령 하나 뜯어보기: ⑨ 보관함·분해·일괄 감정</h3>
+    <div class="grid g2">
+      <div class="card"><h4>내가 쓴 조건</h4>
+        <ul class="dot">
+          <li>보관 최대 <b>1,000명</b>, 10·20·30·40까지 <b>무료</b></li>
+          <li>500까지는 <b>20단위로 골드</b>, 1,000까지는 <b>보석</b></li>
+          <li>무기 보관함은 용사 초빙과 비슷하되 <b>재화 소모를 다르게</b></li>
+          <li>공정 후 <b>장착 / 보관 / 분해</b> 선택</li>
+          <li><b>10회 · 100회</b> 감정, <b>목표 등급이 나올 때까지</b> 감정</li>
+          <li>결과는 간략히 보고 <b>한 번에 선택해서 분해</b>, 나머지는 보관</li>
+        </ul></div>
+      <div class="card"><h4>AI가 기록한 해석 (누적 기획서 7.5절)</h4>
+        <ul class="dot">
+          <li>보석 구간도 <span class="hl">+20칸 단위</span>로 확장</li>
+          <li>'재화 소모를 다르게' = 무기 보관함은 골드 대신 <span class="hl">부산물·보석을 절반 수준</span>으로</li>
+          <li>목표 감정은 <span class="hl">최대 500회</span>에서 멈춤 (재료 소진 시에도 멈춤)</li>
+          <li>방출은 1명당 100G, A급 이상이 섞이면 확인 창</li>
+          <li>저장 키는 유지해서 <span class="hl">이전 저장본과 호환</span></li>
+        </ul></div>
+    </div>
+    <p style="margin-top:12px" class="mute">명령에 없던 빈칸은 AI가 정하되, 무엇을 어떻게 정했는지 기획서에 남기게 했습니다. 그래서 나중에 그 판단만 골라 바꿀 수 있습니다.</p>
+
+    <h3><span class="sn">4.4</span>AI가 묻고, 내가 정한 것</h3>
+    <div class="grid g2">
+      <div class="quote"><span class="who">AI의 확인 질문 (⑲ 작업 중 · 요약)</span>오프라인 정산 한도를 영업 수익과 통행세에 똑같이 적용할까요? 패스가 있을 때는요?</div>
+      <div class="quote" style="border-left-color:var(--gold)"><span class="who" style="color:#8a5a00">내 답</span>영업 수익·통행세 둘 다 2시간, 패스는 둘 다 8시간</div>
+    </div>
+    <p style="margin-top:12px">기획 의도가 갈리는 지점은 AI가 혼자 정하지 않고 물어보게 했고, 답은 기획서의 '사용자 명령 원문' 절에 그대로 남겼습니다.</p>
+  </div></div>
+</section>
+
+<!-- ============ 5. MD 활용 ============ -->
+<section class="part" id="s5">
+  <div class="band"><div class="wrap"><div class="num">05</div><h2>MD로 일하는 방식: 규칙을 파일로 고정하기</h2><p>대화가 길어지거나 세션이 바뀌어도 같은 기준을 지키도록, 지켜야 할 약속은 MD 파일로 만들어 함께 줬습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">5.1</span>네 가지 MD 파일</h3>
+    <div class="grid g2">
+      <div class="card"><span class="tag">계약서</span><h4>SPRITE_MANIFEST.md — 코드 ↔ 아트 세션</h4>
+        <p>파일명·크기·프레임 순서(idle·walk·atk)·외곽선·팔레트·바라보는 방향을 표로 고정했습니다. 두 세션이 동시에 일해도 <span class="hl">이름만 맞으면 게임에 바로 반영</span>됩니다.</p>
+        <p class="mute" style="font-size:14px">결과: 스프라이트 99종, 64색 공통 팔레트, PPU 32 · Point 필터</p></div>
+      <div class="card"><span class="tag">디자인 기준</span><h4>UI_용어_24종_설계가이드.md — UI 통일</h4>
+        <p>레이아웃 7 · 구성 요소 9 · 효과 8개 용어와 <b>적용 원칙 8개</b>, 확인 기준을 담은 문서입니다. "학습해줘 → 반영해줘" 두 명령으로 게임 전체 UI를 점검했습니다.</p>
+        <p class="mute" style="font-size:14px">결과: 팝업 초점, 키보드 조작, 선택 표시, 움직임 줄이기 (기획서 v3)</p></div>
+      <div class="card"><span class="tag">문서 규칙</span><h4>기획서/README.md — 버전 관리</h4>
+        <p>초안 수정 금지 · 저장한 버전 파일 수정 금지 · 새 버전은 끝에 장을 덧붙이기 · 변경이력에 행 추가. 문서 세션은 <span class="hl">매번 이 규칙부터 읽고</span> 작업합니다.</p>
+        <p class="mute" style="font-size:14px">결과: v1~v8 모든 파일 보존, 이전 내용 무손실</p></div>
+      <div class="card"><span class="tag">QA 입력</span><h4>개선안.md — 테스트 결과를 다음 명령으로</h4>
+        <p>QA 세션이 쓴 보고서를 그대로 메인 세션에 첨부해 "이 개선안에 따라 개선해줘"라고 명령했습니다. 문제·심각도·근거·제안이 표로 정리돼 있어 <span class="hl">빠짐없이 대응</span>할 수 있습니다.</p>
+        <p class="mute" style="font-size:14px">결과: 개선안 v1(A~H) · v2(1-1~1-7) · 비교 보고서(F1~F3) 반영</p></div>
+    </div>
+
+    <h3><span class="sn">5.2</span>UI 가이드가 게임에 적용된 방식</h3>
+    <div class="grid g2" style="align-items:start">
+      <div class="scroll-x"><table class="tbl">
+        <thead><tr><th>가이드 항목</th><th>게임에 적용한 것</th></tr></thead>
+        <tbody>
+          <tr><th>Modal / Dialog</th><td>열면 초점이 창 안으로, Tab은 창 안에서만 순환, 닫으면 연 버튼으로 복귀</td></tr>
+          <tr><th>Tabs</th><td>하단 5탭: 선택 시 금색 + 흰 하단 표시선</td></tr>
+          <tr><th>Drawer</th><td>탭 화면은 하단 반화면 드로어로 열어 위쪽 게임을 가리지 않음</td></tr>
+          <tr><th>Toast</th><td>긴 문장 줄바꿈, 레이드 잠김 알림만 세로 1/3 위치</td></tr>
+          <tr><th>움직임 줄이기</th><td>설정이 켜지면 팝업 등장·화면 흔들림·감정 연출 생략, 결과는 즉시 표시</td></tr>
+          <tr><th>원칙 5 (기존 구현 존중)</th><td>디자인은 그대로 두고 부족한 부분만 보완</td></tr>
+          <tr><th>원칙 6 (플랫폼 맞춤)</th><td>웹 접근성 구현을 Android에 억지로 옮기지 않음</td></tr>
+          <tr><th>원칙 8 (확인한 범위만 보고)</th><td>실기기에서 못 본 동작은 '미검증'으로 기록</td></tr>
+        </tbody>
+      </table></div>
+      <div class="grid g2">
+        <figure class="shot"><img src="assets/img/shots/22_kb_tab_focus.png" alt="키보드 초점과 탭 선택 표시" loading="lazy"><figcaption>키보드 초점 · 탭 선택 표시선 (v3)</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/24_reduced_motion_craft.png" alt="움직임 줄이기에서 즉시 결과" loading="lazy"><figcaption>움직임 줄이기: 감정 결과 즉시 표시 (v3)</figcaption></figure>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 6. 기획서 구조 ============ -->
+<section class="part" id="s6">
+  <div class="band"><div class="wrap"><div class="num">06</div><h2>기획서 구조: 4종 문서 × 8개 버전</h2><p>초안 양식(표지 → 번호 장 → 3열 표)을 그대로 따르고, 바뀐 것은 지우지 않고 뒤에 쌓습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">6.1</span>문서 4종의 역할</h3>
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th>문서</th><th>담는 내용</th><th>v1 → v8 분량 (PPT 장 수)</th></tr></thead>
+      <tbody>
+        <tr><th>누적 기획서</th><td>초안 원문(1~5장) + 버전별 추가·변경 사항. <span class="hl">명령 원문·해석·검증 결과</span>까지 남기는 기록용 문서</td><td class="c">28 → 108쪽</td></tr>
+        <tr><th>시스템 기획서</th><td>규칙: 재화 순환, 전투·웨이브·보스, 용사 AI, 상점·불만도, 가챠, 대장간, 레이드, 저장</td><td class="c">19 → 73쪽</td></tr>
+        <tr><th>세부 기획서</th><td>수치: 직업·등급·품질 테이블, 비용 곡선, 확률, 시간 상수 (게임 코드에서 계산)</td><td class="c">25 → 69쪽</td></tr>
+        <tr><th>콘텐츠 기획서</th><td>화면: Stage 1~20, 보스, 화면 구성, 아트 리소스 99종, 자동 촬영 화면</td><td class="c">21 → 74쪽</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid g4" style="margin-top:16px">
+      <figure><img src="assets/img/docs/cum_cover.png" alt="누적 기획서 표지" loading="lazy"><figcaption>누적 기획서 v8</figcaption></figure>
+      <figure><img src="assets/img/docs/sys_loop.png" alt="시스템 기획서: 재화 순환 루프" loading="lazy"><figcaption>시스템: 재화 순환 루프</figcaption></figure>
+      <figure><img src="assets/img/docs/det_stage.png" alt="세부 기획서: Stage별 기준 수치" loading="lazy"><figcaption>세부: Stage별 기준 수치</figcaption></figure>
+      <figure><img src="assets/img/docs/con_tabs.png" alt="콘텐츠 기획서: 하단 5탭 화면" loading="lazy"><figcaption>콘텐츠: 하단 5탭 화면</figcaption></figure>
+    </div>
+
+    <h3><span class="sn">6.2</span>누적 방식: 앞 내용은 한 글자도 바꾸지 않는다</h3>
+    <div class="grid g2" style="align-items:center">
+      <div class="stack" aria-label="누적 기획서 버전별 분량">
+        <div class="ver"><b>v1</b><div class="bar"><i class="n" style="width:26%"></i></div><span>28쪽</span></div>
+        <div class="ver"><b>v2</b><div class="bar"><i class="o" style="width:26%"></i><i class="n" style="width:9%"></i></div><span>37쪽</span></div>
+        <div class="ver"><b>v3</b><div class="bar"><i class="o" style="width:35%"></i><i class="n" style="width:9%"></i></div><span>47쪽</span></div>
+        <div class="ver"><b>v4</b><div class="bar"><i class="o" style="width:44%"></i><i class="n" style="width:10%"></i></div><span>58쪽</span></div>
+        <div class="ver"><b>v5</b><div class="bar"><i class="o" style="width:54%"></i><i class="n" style="width:12%"></i></div><span>71쪽</span></div>
+        <div class="ver"><b>v6</b><div class="bar"><i class="o" style="width:66%"></i><i class="n" style="width:7%"></i></div><span>79쪽</span></div>
+        <div class="ver"><b>v7</b><div class="bar"><i class="o" style="width:73%"></i><i class="n" style="width:11%"></i></div><span>91쪽</span></div>
+        <div class="ver"><b>v8</b><div class="bar"><i class="o" style="width:84%"></i><i class="n" style="width:16%"></i></div><span>108쪽</span></div>
+      </div>
+      <div>
+        <p>새 버전은 <b>직전 버전 전체 + 새 장 1개</b>입니다. 회색은 그대로 둔 이전 내용, 파란색은 그 버전에 추가된 장입니다.</p>
+        <ul class="dot">
+          <li>파일 이름: <code>문서이름_v버전_날짜</code> (예: 누적기획서_v8_2026-11-23)</li>
+          <li>앞 장의 수치가 낡으면 새 장에 "○장 수치 변경: 이전 값 → 새 값 (이유)"로 적습니다.</li>
+          <li>새 파일을 만든 뒤 <span class="hl">이전 버전 본문이 그대로 들어 있는지 단락 단위로 비교</span>했습니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3><span class="sn">6.3</span>버전마다 같은 순서로 쓰는 장 (v2 ~ v8)</h3>
+    <div class="grid g2" style="align-items:start">
+      <ol class="tmpl">
+        <li><span class="badge">1</span><div><b>개정 이력</b><small>버전·날짜·근거 명령·주요 내용</small></div></li>
+        <li><span class="badge">2</span><div><b>사용자 명령 원문</b><small>내가 쓴 문장 그대로 (확인 질문에 대한 답 포함)</small></div></li>
+        <li><span class="badge">3</span><div><b>구현 요약</b><small>항목 · 구현 내용 · 비고 3열 표</small></div></li>
+        <li><span class="badge">4</span><div><b>이전 문서 대비 변경 사항</b><small>항목 · 이전 · 새 구현</small></div></li>
+        <li><span class="badge">5</span><div><b>명령 해석 · 판단 사항</b><small>명령에 없던 빈칸을 어떻게 채웠는지</small></div></li>
+        <li><span class="badge">6</span><div><b>검증 결과</b><small>무엇을 어떻게 확인했고, 무엇은 확인하지 못했는지</small></div></li>
+        <li><span class="badge">7</span><div><b>남은 과제 · 확인 사항</b><small>다음 명령으로 넘길 것</small></div></li>
+        <li><span class="badge">8</span><div><b>명령 · 변경 이력 추가</b><small>변경이력.xlsx에 추가한 행</small></div></li>
+      </ol>
+      <div class="grid g2">
+        <figure><img src="assets/img/docs/cum_132.png" alt="13.2 사용자 명령 원문" loading="lazy"><figcaption><span class="badge" style="width:20px;height:20px;font-size:12px">2</span> 13.2 사용자 명령 원문</figcaption></figure>
+        <figure><img src="assets/img/docs/cum_133.png" alt="13.3 구현 요약" loading="lazy"><figcaption><span class="badge" style="width:20px;height:20px;font-size:12px">3</span> 13.3 구현 요약</figcaption></figure>
+        <figure><img src="assets/img/docs/cum_135.png" alt="13.5 이전 문서 대비 변경" loading="lazy"><figcaption><span class="badge" style="width:20px;height:20px;font-size:12px">4</span> 13.5 v1~v7 대비 변경</figcaption></figure>
+        <figure><img src="assets/img/docs/cum_138.png" alt="13.8 검증 결과" loading="lazy"><figcaption><span class="badge" style="width:20px;height:20px;font-size:12px">6</span> 13.8 검증 결과</figcaption></figure>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 7. 기획서 작동 ============ -->
+<section class="part" id="s7">
+  <div class="band"><div class="wrap"><div class="num">07</div><h2>기획서가 작동하는 방식</h2><p>기획서는 손으로 고치는 문서가 아니라, 게임 코드와 자동 촬영 화면에서 만들어지는 결과물입니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">7.1</span>명령 하나가 문서가 되기까지</h3>
+    <div class="flow">
+      <div class="step me"><b>① 명령</b><small>채팅으로 기능·수치·예외를 지시</small></div><div class="arr">→</div>
+      <div class="step ai"><b>② 코드 수정</b><small>웹 game.js + Unity C#을 함께 고치고 수치가 같은지 대조</small></div><div class="arr">→</div>
+      <div class="step ai"><b>③ 자동 검증·촬영</b><small>헤드리스 Chrome이 실제로 클릭하며 확인하고 화면 촬영 (shots_vN.js)</small></div><div class="arr">→</div>
+      <div class="step ai"><b>④ 문서 조립</b><small>content_*.js 끝에 새 버전 추가 → docx·pptx 4종 생성</small></div><div class="arr">→</div>
+      <div class="step ai"><b>⑤ 기록</b><small>변경이력.xlsx 행 추가 · 이전 본문 보존 확인</small></div>
+    </div>
+
+    <h3><span class="sn">7.2</span>세 가지 출처를 분리했다</h3>
+    <div class="grid g3">
+      <div class="card"><span class="badge blue">1</span><h4>수치의 정답 = 게임 코드</h4><p>세부 기획서 표는 Data.cs · Game.cs · game.js의 값으로 계산합니다. 버전마다 고정 사본(data_game_v1.js, v2.js…)을 두어 <span class="hl">과거 문서의 숫자가 바뀌지 않게</span> 했습니다.</p></div>
+      <div class="card"><span class="badge blue">2</span><h4>화면 = 자동 촬영</h4><p>버전마다 HTML 사본을 헤드리스 Chrome으로 열어, 실제 버튼을 누르고 찍습니다. 상태 조작은 <span class="hl">사본에서만</span> 해서 원본 게임은 건드리지 않습니다.</p></div>
+      <div class="card"><span class="badge blue">3</span><h4>문장 = 버전별 part</h4><p>content_*.js의 parts 배열에 버전별 블록(h1·h2·p·표·이미지)을 덧붙입니다. 같은 내용에서 <span class="hl">Word와 PowerPoint를 동시에</span> 만듭니다.</p></div>
+    </div>
+
+    <h3><span class="sn">7.3</span>실제 구조 (요약)</h3>
+    <div class="grid g2" style="align-items:start">
+<pre class="code"><span class="c">// 기획서/_도구/content_cumulative.js
+// 이미 발행된 part는 고치지 않고, 새 part를 끝에 추가한다</span>
+E.parts.<span class="k">push</span>({
+  version: <span class="s">'v8'</span>, date: <span class="s">'2026-11-23'</span>, blocks: [
+    { h1: <span class="s">'13. 추가·변경 사항 — v8'</span>, pageBreak: <span class="k">true</span> },
+    { h2: <span class="s">'13.2 사용자 명령 (⑲ · ⑳, 원문)'</span> },
+    { table: { head: [<span class="s">'항목'</span>, <span class="s">'이전'</span>, <span class="s">'v8 구현'</span>],
+               rows: [ ... ] } },
+  ]
+});
+
+<span class="c"># 문서 4종 × docx·pptx 다시 만들기</span>
+node build_docx.js 초안.docx .. images cumulative system detail content
+node build_pptx.js 초안.docx .. images cumulative system detail content</pre>
+      <div class="scroll-x"><table class="tbl">
+        <thead><tr><th>변경이력.xlsx 열</th><th>예시 (⑳)</th></tr></thead>
+        <tbody>
+          <tr><th>날짜 · 순번</th><td>2026-11-23 · 20</td></tr>
+          <tr><th>사용자 명령</th><td>"3번째 개선사항도 진행하는데, 왼쪽 상단에 ? 버튼을…"</td></tr>
+          <tr><th>수정·추가 사항</th><td>[?] 버튼 + 확률 정보 창 5구역</td></tr>
+          <tr><th>결과</th><td>웹 검증, 캡처 3장, APK 빌드 성공, BlueStacks 미확인</td></tr>
+          <tr><th>관련 파일</th><td>game.js, Screens.cs, Game.cs, 기획서 v8</td></tr>
+          <tr><th>비고</th><td>v7 확인 요청은 아직 답 없음</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 8. 검증 루프 ============ -->
+<section class="part" id="s8">
+  <div class="band"><div class="wrap"><div class="num">08</div><h2>검증 루프: AI가 만든 것을 AI가 다시 테스트</h2><p>만든 세션과 다른 세션이 APK를 직접 플레이해 문제를 찾고, 그 보고서가 다음 명령이 됩니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">8.1</span>루프</h3>
+    <div class="flow">
+      <div class="step ai"><b>만들기</b><small>메인 세션이 구현·빌드</small></div><div class="arr">→</div>
+      <div class="step ai"><b>플레이 테스트</b><small>QA 세션: BlueStacks에서 25분 플레이 + REA로 APK 분석</small></div><div class="arr">→</div>
+      <div class="step ai"><b>개선안.md</b><small>발견 · 심각도 · 근거 · 수정 제안 · 우선순위</small></div><div class="arr">→</div>
+      <div class="step me"><b>판단</b><small>내가 범위와 우선순위를 정해 명령</small></div><div class="arr">→</div>
+      <div class="step ai"><b>반영 · 재검증</b><small>수정 → 웹·APK 재확인 → 기획서·변경이력</small></div>
+    </div>
+
+    <h3><span class="sn">8.2</span>개선안 v1이 찾은 문제와 대응</h3>
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th class="c">#</th><th>QA 세션이 찾은 문제</th><th class="c">심각도</th><th>반영한 것 (명령 ⑥)</th></tr></thead>
+      <tbody>
+        <tr><td class="c"><span class="badge">A</span></td><td>10연 소환 때 빈자리가 2칸뿐인데 경고 없이 진행되고, B급 포함 8명이 반값으로 자동 환급됨</td><td class="c red">높음</td><td>정원 초과 사전 확인 창 + 높은 등급부터 남기기</td></tr>
+        <tr><td class="c"><span class="badge">B</span></td><td>포션 재고 0 → 매출이 2분 넘게 멈췄는데 알림 없음</td><td class="c red">높음</td><td>재고 20% 이하 말풍선 · 소진 알림 · 고블린 첫 1명 무료</td></tr>
+        <tr><td class="c"><span class="badge">C</span></td><td>바가지 200% → 3분 만에 파업, 초반엔 대응 수단 없음</td><td class="c red">높음</td><td>파업 배너 · 불만도 70 이상 깜빡임 · 분수대 연설 · "파업까지 약 N회" 표시</td></tr>
+        <tr><td class="c"><span class="badge">D</span></td><td>가격 슬라이더를 누르면 상점 창이 닫힘 (3번 모두 재현)</td><td class="c">중간</td><td>터치가 창 뒤로 전달되던 버그 수정</td></tr>
+        <tr><td class="c"><span class="badge">E</span></td><td>대장간 제작을 연타하면 확인 없이 계속 제작, 결과가 작게만 보임</td><td class="c">중간</td><td>제작 확인 창 · 품질 결과 창 · 0.3초 연타 방지</td></tr>
+        <tr><td class="c"><span class="badge">G</span></td><td>'상권 입장'과 '대장간 공정'이 같은 위치라 두 번 누르면 엉뚱한 창</td><td class="c">낮음</td><td>씬 전환 후 0.4초 입력 잠금</td></tr>
+        <tr><td class="c"><span class="badge">H</span></td><td>인트로 팝업을 닫기 전에 전투가 진행됨</td><td class="c">낮음</td><td>인트로·종료 팝업 동안 일시정지</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3><span class="sn">8.3</span>경쟁작 비교 분석으로 찾은 개선점</h3>
+    <div class="grid g3">
+      <div class="card"><span class="tag">F1 · 명령 ⑱ · v7</span><h4>신화 등급이 250회 동안 잠김, 천장 없음</h4><p>→ 1회차부터 0.5% 개방, 신화 천장 120회.<br><span class="hl">20만 회 시뮬레이션 평균 81.6회</span> (이전: 250회 전 0%)</p></div>
+      <div class="card"><span class="tag">F2 · 명령 ⑲ · v8</span><h4>저장·오프라인 정산 조작 가능</h4><p>→ 정산 한도 2시간 통합, 서버 시각 + 단조 시계, <span class="hl">저장 서명(HMAC-SHA256)</span>과 변조 시 백업 복원</p></div>
+      <div class="card"><span class="tag">F3 · 명령 ⑳ · v8</span><h4>확률 정보가 흩어져 있음</h4><p>→ 초빙 창 왼쪽 위 <span class="hl">[?] 버튼</span>으로 등급·직업·성향·보장 규칙을 한 창에</p></div>
+    </div>
+    <div class="phone-row" style="margin-top:16px">
+      <figure class="shot"><img src="assets/img/shots/46_gacha_pity_soft.png" alt="신화 천장 안내" loading="lazy"><figcaption>F1: 신화 확정까지 n회</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/48_offline_cap.png" alt="오프라인 정산 한도" loading="lazy"><figcaption>F2: 최대 2시간 정산</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/54_save_tamper.png" alt="저장 변조 감지" loading="lazy"><figcaption>F2: 저장 변조 감지</figcaption></figure>
+      <figure class="shot"><img src="assets/img/shots/51_prob_info_top.png" alt="확률 정보 창" loading="lazy"><figcaption>F3: [?] 확률 정보</figcaption></figure>
+    </div>
+
+    <h3><span class="sn">8.4</span>확인하지 못한 것도 기록했다</h3>
+    <div class="box gold">
+      <ul class="dot" style="margin:0">
+        <li>움직임 줄이기: 코드 반영, <b>실기기 설정은 검증하지 않음</b> (에뮬레이터 시스템 설정을 바꾸지 않음)</li>
+        <li>레이드 잠김 알림 위치: 테스트 저장이 이미 Stage 20이라 <b>기기에서는 재현 못 함</b>, 웹에서만 확인</li>
+        <li>v7 · v8 APK: 빌드 성공, <b>BlueStacks가 꺼져 있어 기기 확인은 못 함</b></li>
+        <li>저장 서명: 키가 앱 안에 있어 <b>손으로 고친 저장본을 막는 수준</b>. 보석·소환의 서버 확정은 서버가 없어 미적용</li>
+      </ul>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 9. v1 vs v8 ============ -->
+<section class="part" id="s9">
+  <div class="band"><div class="wrap"><div class="num">09</div><h2>v1 vs v8: 같은 동선으로 비교</h2><p>두 버전을 같은 상태(Stage 9)에서 시작해, 같은 순서로 버튼을 누르도록 스크립트로 자동 플레이하고 녹화했습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3 id="compare"><span class="sn">9.1</span>나란히 비교 영상 (60초)</h3>
+    <div class="video-main">
+      <video id="vCompare" controls playsinline preload="metadata" poster="assets/video/compare_v1_v8_poster.jpg">
+        <source src="assets/video/compare_v1_v8.mp4" type="video/mp4">
+      </video>
+      <div class="chips" id="cmpChips" aria-label="장면으로 이동"></div>
+    </div>
+    <p class="mute" style="margin-top:10px;font-size:14px">왼쪽 v1(11-14), 오른쪽 v8(11-23). 위쪽 파란 글씨가 그 장면에서 바뀐 점과 근거 명령입니다. v1에 없는 기능은 어둡게 표시했습니다. 흰 원은 자동 플레이가 누른 위치입니다.</p>
+
+    <h3><span class="sn">9.2</span>장면별로 달라진 점</h3>
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th>장면</th><th>v1 (11-14)</th><th>v8 (11-23)</th><th class="c">근거</th></tr></thead>
+      <tbody>
+        <tr><th>용사 초빙 10연</th><td>정원이 차면 확인 후 환급</td><td>넘치는 용사는 보관함으로, 첫 10연 할인</td><td class="c">#9 #15</td></tr>
+        <tr><th>확률 정보</th><td>소비 성향 확률 표 1개</td><td>[?] 버튼 → 등급·레벨·직업·성향·보장 5구역</td><td class="c">#20</td></tr>
+        <tr><th>대장간</th><td>1회 제작 → 가장 약한 용사에게 자동 장착</td><td>1·10·100회 일괄 감정, 10×10 결과에서 골라 분해</td><td class="c">#9</td></tr>
+        <tr><th>보관함</th><td>없음</td><td>무기·용사 보관함 (영주 레벨 연동 확장)</td><td class="c">#9 #14</td></tr>
+        <tr><th>영주 금고</th><td>결제 데모 상품 1개</td><td>재화 인벤토리 → 상세 → 상점</td><td class="c">#14</td></tr>
+        <tr><th>설정</th><td>금고 안 사운드·초기화 버튼</td><td>톱니 → 영주 장부 · 사운드 · 처음부터 다시</td><td class="c">#14</td></tr>
+        <tr><th>레이드 잠김</th><td>맨 위 작은 알림</td><td>화면 1/3 지점 빨간 알림 (게임은 멈추지 않음)</td><td class="c">#15 #16</td></tr>
+        <tr><th>보이지 않는 변화</th><td>—</td><td>신화 천장 120회, 정산 한도 2시간, 저장 서명, 키보드·초점 접근성</td><td class="c">#12 #18 #19</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3><span class="sn">9.3</span>버전별 영상 따로 보기</h3>
+    <div class="duo">
+      <div class="vcard"><h4><span class="tag gray">v1</span> 2026-11-14 · 40초</h4>
+        <video controls playsinline preload="none" poster="assets/video/play_v1_poster.jpg"><source src="assets/video/play_v1.mp4" type="video/mp4"></video></div>
+      <div class="vcard"><h4><span class="tag">v8</span> 2026-11-23 · 57초</h4>
+        <video controls playsinline preload="none" poster="assets/video/play_v8_poster.jpg"><source src="assets/video/play_v8.mp4" type="video/mp4"></video></div>
+    </div>
+
+    <h3><span class="sn">9.4</span>버전별 대표 화면</h3>
+    <div class="gallery">
+      <figure><div class="vt"><span class="tag gray">v1</span>11-16 · ①~⑧</div><img src="assets/img/shots/04_town.png" alt="v1 상점가" loading="lazy"><figcaption>초안 구현 + 개선안 v1<small>상점가 · 5탭 · 다음 목표</small></figcaption></figure>
+      <figure><div class="vt"><span class="tag">v2</span>11-16 · ⑨</div><img src="assets/img/shots/15_tray_100.png" alt="100회 감정 결과" loading="lazy"><figcaption>100회 일괄 감정<small>결과 격자 · 선택 분해</small></figcaption></figure>
+      <figure><div class="vt"><span class="tag">v3</span>11-17 · ⑫</div><img src="assets/img/shots/22_kb_tab_focus.png" alt="키보드 초점" loading="lazy"><figcaption>UI 가이드 반영<small>초점 · 선택 표시</small></figcaption></figure>
+      <figure><div class="vt"><span class="tag">v4</span>11-17 · ⑭</div><img src="assets/img/shots/30_store_top.png" alt="상점" loading="lazy"><figcaption>상점 신설<small>영구권 · 광고 · 교환</small></figcaption></figure>
+      <figure><div class="vt"><span class="tag">v5</span>11-18 · ⑮</div><img src="assets/img/shots/39_build_rank_progress.png" alt="상권 등급 진행도" loading="lazy"><figcaption>개선안 v2 반영<small>상권 등급 진행도</small></figcaption></figure>
+      <figure><div class="vt"><span class="tag">v6</span>11-18 · ⑯</div><img src="assets/img/shots/44_raid_lock_toast.png" alt="레이드 잠김 알림" loading="lazy"><figcaption>레이드 잠김 알림<small>가운데 위 · 2.5초</small></figcaption></figure>
+      <figure><div class="vt"><span class="tag">v7</span>11-23 · ⑱</div><img src="assets/img/shots/46_gacha_pity_soft.png" alt="신화 천장" loading="lazy"><figcaption>신화 천장 120회<small>확정까지 n회 표시</small></figcaption></figure>
+      <figure><div class="vt"><span class="tag">v8</span>11-23 · ⑲⑳</div><img src="assets/img/shots/51_prob_info_top.png" alt="확률 정보" loading="lazy"><figcaption>확률 정보 · 정산 보호<small>[?] 버튼 · 저장 서명</small></figcaption></figure>
+    </div>
+
+    <h3 id="play"><span class="sn">9.5</span>직접 플레이</h3>
+    <div class="play">
+      <div class="phone"><div class="screen" id="screen">
+        <div class="start"><button class="btn primary" id="startBtn" type="button">▶ 여기서 플레이</button></div>
+      </div></div>
+      <div>
+        <div class="tabs" role="tablist" aria-label="플레이할 버전">
+          <button class="tab" role="tab" aria-selected="false" data-v="v1" type="button">v1 · 11-14</button>
+          <button class="tab" role="tab" aria-selected="true" data-v="v8" type="button">v8 · 11-23 최종</button>
+        </div>
+        <p>각 버전의 웹 빌드(단일 HTML)를 그대로 넣었습니다. 마우스로 누르면 터치처럼 동작합니다.</p>
+        <ul class="dot">
+          <li><b>상권 입장</b>으로 상점가에 들어가고, 하단 5탭에서 건설·초빙·대장간·레이드·금고를 엽니다.</li>
+          <li>Esc 키는 Android의 뒤로 가기와 같습니다.</li>
+          <li>진행 상황은 이 브라우저에만 저장되며, 버전끼리 섞이지 않습니다.</li>
+        </ul>
+        <div class="btns"><a class="btn primary" href="play/v8.html" target="_blank" rel="noopener">v8 새 창에서 열기</a><a class="btn" style="border:1px solid var(--line);color:var(--ink)" href="play/v1.html" target="_blank" rel="noopener">v1 새 창에서 열기</a></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 10. 정리 ============ -->
+<section class="part" id="s10">
+  <div class="band"><div class="wrap"><div class="num">10</div><h2>정리: 내가 AI와 일하는 방식</h2><p>이 프로젝트에서 굳힌 다섯 가지 원칙과, 아직 남은 일</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">10.1</span>AI 활용 원칙 5가지</h3>
+    <div class="principles">
+      <div class="card"><span class="badge">1</span><b>방향은 내가, 반복은 AI가</b><small>무엇을 왜 만들지와 우선순위는 내가 정하고, 구현·문서·테스트 반복은 맡긴다.</small></div>
+      <div class="card"><span class="badge">2</span><b>약속은 MD 파일로</b><small>규격표·UI 가이드·문서 규칙을 파일로 고정해 세션이 바뀌어도 기준이 같다.</small></div>
+      <div class="card"><span class="badge">3</span><b>지우지 않고 쌓는다</b><small>초안과 이전 버전은 그대로 두고, 바뀐 것만 새 장과 변경이력에 더한다.</small></div>
+      <div class="card"><span class="badge">4</span><b>AI 결과는 다른 AI가 검증</b><small>만든 세션과 다른 세션이 직접 플레이해 개선안을 쓰고, 그게 다음 명령이 된다.</small></div>
+      <div class="card"><span class="badge">5</span><b>확인한 것만 보고</b><small>못 본 동작은 '미검증'으로 남기고, 사람이 직접 볼 일(손맛·가독성)을 분리한다.</small></div>
+    </div>
+
+    <h3><span class="sn">10.2</span>남은 일</h3>
+    <div class="grid g2">
+      <div class="card"><h4>게임</h4><ul class="dot">
+        <li>강화 시스템 항목 채우기 (연결 구조만 있고 항목 0개)</li>
+        <li>보석·소환·패스를 서버에서 확정하는 구조</li>
+        <li>코드 구조 분리, 밸런스 데이터 외부화 (개선안 v1 보류 항목)</li>
+      </ul></div>
+      <div class="card"><h4>검증</h4><ul class="dot">
+        <li>여러 실기기에서 성능·발열·노치 화면 확인</li>
+        <li>v7·v8 APK 기기 테스트, 움직임 줄이기 실기기 확인</li>
+        <li>손맛·글자 크기는 직접 플레이 테스트로 확인</li>
+      </ul></div>
+    </div>
+
+    <h3><span class="sn">10.3</span>이 포트폴리오도 같은 방식으로</h3>
+    <p>비교 영상은 손으로 녹화하지 않았습니다. 두 버전을 같은 상태로 만든 뒤 <span class="hl">같은 순서로 버튼을 누르는 스크립트</span>(rec_game.js)로 자동 플레이하고, 화면 프레임을 받아 장면 제목과 바뀐 점을 얹어 MP4로 인코딩했습니다(compose.html). 발표 자료(PPT)도 같은 내용으로 스크립트가 만듭니다.</p>
+  </div></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>〈던전 앞 자본주의 상점가〉 AI 제작 포트폴리오</b> · 김다운 · 2026<br>
+    근거 자료: 기획서/변경이력.xlsx · 누적·시스템·세부·콘텐츠 기획서 v1~v8 · 개선안 v1·v2 · 경쟁작 비교 분석 보고서<br><a href="../" style="color:#ffd36b">← 포트폴리오 목록</a>
+  </div>
+</footer>
+
+<script>
+// 비교 영상 장면 이동
+(() => {
+  const CH = [["lobby","로비",2.2],["town","상권 입장",6.4],["shop","포션점 관리",10],["gacha","용사 초빙 10연",15.5],["prob","확률 정보",21.5],["forge","대장간",26],["store","보관함",33.8],["vault","영주 금고",41.4],["settings","설정",49],["raid","레이드 잠김",52.3],["exit","종료 확인",56.7]];
+  const v = document.getElementById('vCompare'), box = document.getElementById('cmpChips');
+  const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  CH.forEach(([k, n, t], i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.dataset.t = t;
+    b.innerHTML = `<span class="t">${fmt(t)}</span>${n}`;
+    b.onclick = () => { v.currentTime = t + 0.05; v.play().catch(() => {}); };
+    box.appendChild(b);
+  });
+  v.addEventListener('timeupdate', () => {
+    let cur = -1; CH.forEach(([, , t], i) => { if (v.currentTime >= t) cur = i; });
+    box.querySelectorAll('.chip').forEach((b, i) => b.classList.toggle('on', i === cur));
+  });
+})();
+// 직접 플레이: 누를 때만 게임을 불러옴
+(() => {
+  let ver = 'v8';
+  const screen = document.getElementById('screen'), tabs = document.querySelectorAll('.tab');
+  const load = () => { screen.innerHTML = `<iframe src="play/${ver}.html" title="던전 앞 자본주의 상점가 ${ver}" allow="autoplay"></iframe>`; };
+  document.getElementById('startBtn').onclick = load;
+  tabs.forEach(t => t.onclick = () => {
+    ver = t.dataset.v; tabs.forEach(x => x.setAttribute('aria-selected', String(x === t)));
+    screen.style.backgroundImage = `url(assets/img/phone_${ver}.jpg)`;
+    if (screen.querySelector('iframe')) load();
+  });
+})();
+// 목차: 지금 읽는 장 표시
+(() => {
+  const links = [...document.querySelectorAll('.toc a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+  const on = () => { let i = 0; secs.forEach((s, k) => { if (s.getBoundingClientRect().top < 120) i = k; }); links.forEach((a, k) => a.classList.toggle('on', k === i && window.scrollY > 300)); };
+  addEventListener('scroll', on, { passive: true }); on();
+})();
+</script>
+</body>
+</html>
