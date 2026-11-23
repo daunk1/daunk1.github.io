@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>어라이즈 역기획으로 고친 상점가 — 비교와 개선</title>
+<meta name="description" content="〈나 혼자만 레벨업: 어라이즈〉를 역기획하고, 〈던전 앞 자본주의 상점가〉와 18개 항목으로 비교해 가챠·저장·확률 고지를 고친 과정">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .hero { background-image: url(assets/img/bg_title.jpg); }
+  .verdict { display: inline-block; font-size: 12.5px; font-weight: 700; border-radius: 999px; padding: 1px 9px; white-space: nowrap; }
+  .v-g1 { background: var(--blue-soft); color: var(--blue-d); border: 1px solid var(--blue-line); }
+  .v-ar { background: #fdeee7; color: #a8441b; border: 1px solid #f6c9b4; }
+  .v-eq { background: var(--bg-soft); color: var(--sub); border: 1px solid var(--line); }
+  .ba { display: grid; grid-template-columns: 1fr 34px 1fr; gap: 8px; align-items: stretch; }
+  .ba .arr { display: grid; place-items: center; color: var(--blue); font-weight: 800; font-size: 22px; }
+  .ba .side { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: #fff; }
+  .ba .side.after { background: var(--blue-soft); border-color: var(--blue-line); }
+  .ba .side small { display: block; font-size: 12px; font-weight: 800; color: var(--mute); letter-spacing: .04em; margin-bottom: 4px; }
+  .fix { border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow); background: #fff; margin-bottom: 22px; }
+  .fix h4 { font-size: 20px; margin: 4px 0 14px; }
+  .fix .steps { display: grid; grid-template-columns: 120px 1fr; gap: 8px 14px; }
+  .fix .steps dt { font-size: 13px; font-weight: 800; color: var(--blue); padding-top: 3px; }
+  .fix .steps dd { margin: 0; }
+  .fix .shots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+  .chart-wrap { border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 10px; background: #fcfcfb; position: relative; }
+  .chart-wrap svg { width: 100%; height: auto; display: block; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; margin-bottom: 8px; color: var(--ink); }
+  .legend i { display: inline-block; width: 18px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
+  .tip { position: absolute; pointer-events: none; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 18px rgba(27,36,64,.15); padding: 8px 10px; font-size: 13px; line-height: 1.5; display: none; min-width: 170px; }
+  .tip b { color: var(--navy); }
+  .tip .sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .status { font-size: 12.5px; font-weight: 800; white-space: nowrap; }
+  .status.done { color: #0a7d0a; }
+  .status.part { color: #a86f00; }
+  .status.todo { color: var(--mute); }
+  @media (max-width: 720px) { .ba { grid-template-columns: 1fr; } .ba .arr { transform: rotate(90deg); height: 26px; } .fix .steps { grid-template-columns: 1fr; gap: 2px; } .fix .shots { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap"><div>
+    <span class="kicker">AI GAME MAKER PORTFOLIO · 경쟁작 역기획 활용</span>
+    <h1>〈나 혼자만 레벨업: 어라이즈〉 역기획으로<br>〈던전 앞 자본주의 상점가〉를 고치다</h1>
+    <p class="lead">넷마블네오의 수집형 RPG를 역기획하고, 내 게임과 <b>18개 항목</b>으로 나란히 비교했습니다. 지킬 장점 7개와 고칠 점 10개를 찾았고, 그중 출시 전 필수 3개를 실제로 고쳤습니다.</p>
+    <div class="who">김다운 · 2026-11-23 · 명령 ⑱ ⑲ ⑳ · 기획서 v7 · v8</div>
+    <div class="stats">
+      <div class="stat"><b>18</b><span>비교 항목</span></div>
+      <div class="stat"><b>7 · 10</b><span>지킬 점 · 고칠 점</span></div>
+      <div class="stat"><b>275 → 82회</b><span>첫 신화까지 기대 소환</span></div>
+      <div class="stat"><b>3 / 3</b><span>P1(출시 전 필수) 반영</span></div>
+    </div>
+    <div class="btns"><a class="btn primary" href="#s4">고친 과정 보기</a><a class="btn ghost" href="../">← 포트폴리오 목록</a></div>
+  </div></div>
+</header>
+
+<nav class="toc" aria-label="목차"><div class="wrap">
+  <a href="#s1">1. 왜 어라이즈</a><a href="#s2">2. 역기획 방법</a><a href="#s3">3. 18개 항목 비교</a><a href="#s4">4. 고친 과정</a><a href="#s5">5. 결과</a><a href="#s6">6. 남은 과제</a>
+</div></nav>
+
+<main>
+
+<section class="part" id="s1">
+  <div class="band"><div class="wrap"><div class="num">01</div><h2>왜 어라이즈인가</h2><p>지원하는 회사의 게임 중 내 게임과 겹치는 시스템이 가장 많은 것을 골랐습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="grid g2" style="align-items:start">
+      <div>
+        <div class="quote"><span class="who">명령 · 2026-11-23</span>이 게임과 비슷한 장르 중 넷마블네오의 게임을 추려줘.</div>
+        <p style="margin-top:14px">장르는 다릅니다(수집형 액션 RPG ↔ 세로형 방치 타이쿤). 그래서 전투 조작은 빼고, 두 게임이 <span class="hl">함께 가진 시스템</span>만 비교 대상으로 잡았습니다.</p>
+      </div>
+      <div class="card"><h4>비교 축 6개</h4>
+        <div><span class="tag">가챠 (용사 초빙 ↔ 헌터 소환)</span><span class="tag">성장 상한</span><span class="tag">행동 제한</span><span class="tag">방치 · 오프라인</span><span class="tag">BM</span><span class="tag">온보딩</span></div>
+        <p class="mute" style="margin:10px 0 0;font-size:14px">내 게임 수치는 전부 실제 코드(<code>game.js</code>)에서 읽었고, 어라이즈 수치는 공개 자료 18개에 신뢰도 A~D를 붙여 사실과 추정을 나눴습니다.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s2">
+  <div class="band"><div class="wrap"><div class="num">02</div><h2>역기획 방법</h2><p>코어 루프를 먼저 정의하고, 숫자는 직접 계산해서 검증했습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <h3><span class="sn">2.1</span>어라이즈 코어 루프 (3층)</h3>
+    <div class="flow">
+      <div class="step"><b>① 전투 루프 (판 단위)</b><small>게이트 열쇠 → 전투 → 골드·경험치·재료 → 성진우 레벨 → 헌터 상한 상승 → 상위 게이트</small></div><div class="arr">+</div>
+      <div class="step"><b>② 소환 루프</b><small>마정석 250 → 소환 → 헌터·무기 → 중복은 돌파 재료 → 전투력</small></div><div class="arr">+</div>
+      <div class="step"><b>③ 메타 루프 (일·주)</b><small>인스턴스 던전·시간의 전장·광휘의 공방 → 콘텐츠별 전용 재료</small></div>
+    </div>
+    <p style="margin-top:12px">판정: 행동 제한은 하루 열쇠 10개(깨야만 줄어듦)에만 있고, 진짜 병목은 <span class="hl">콘텐츠별 전용 재료와 소환 재화</span>입니다.</p>
+
+    <h3><span class="sn">2.2</span>숫자는 직접 계산해서 맞춰 봄 — 소환 천장</h3>
+    <p>공략 두 곳의 확률(SSR 1.2%, 64회부터 회당 +5.8%p, 80회 확정)을 식으로 세우고, 79회째 94.0% → 80회 확정으로 이어지는지 확인해 <b>기대 소환 수 46.6회</b>를 구했습니다. 같은 방식으로 내 게임의 신화 기대값(<b>약 275회</b>)을 계산해 나란히 놓았습니다.</p>
+    <div class="chart-wrap" id="chartWrap">
+      <div class="legend" id="legend"></div>
+      <svg id="chart" viewBox="0 0 760 330" role="img" aria-label="소환 횟수별 최고 등급을 한 번 이상 얻었을 누적 확률"></svg>
+      <div class="tip" id="tip"></div>
+    </div>
+    <p class="mute" style="font-size:13.5px;margin-top:8px">세로축: 그 횟수까지 최고 등급(SSR·신화)을 한 번 이상 얻었을 확률. 게임 1은 1회 소환·주점 Lv.1 기준입니다. 점선은 수정 전입니다.</p>
+    <div class="scroll-x" style="margin-top:10px"><table class="tbl">
+      <thead><tr><th>지표</th><th>어라이즈 (SSR)</th><th>게임 1 수정 전 (v6)</th><th>게임 1 수정 후 (v7)</th></tr></thead>
+      <tbody>
+        <tr><th>처음 나올 수 있는 회차</th><td>1회차부터 1.2%</td><td>누적 250회 전에는 0%</td><td>1회차부터 0.5%</td></tr>
+        <tr><th>천장</th><td>64회부터 +5.8%p, 80회 확정</td><td>없음</td><td>101회부터 +5%p, 120회 확정</td></tr>
+        <tr><th>첫 최고 등급까지 기대 소환</th><td>46.6회</td><td>약 275회</td><td><b>82.0회</b></td></tr>
+      </tbody></table></div>
+  </div></div>
+</section>
+
+<section class="part" id="s3">
+  <div class="band"><div class="wrap"><div class="num">03</div><h2>18개 항목 비교</h2><p>항목마다 두 게임의 근거를 적고 판정했습니다. 판정 결과로 '지킬 것'과 '고칠 것'을 나눴습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th>#</th><th>항목</th><th>나 혼자만 레벨업: 어라이즈</th><th>던전 앞 자본주의 상점가</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td>C2</td><th>플레이어 역할</th><td>성진우를 직접 조작</td><td>용사를 손님으로 받는 영주</td><td><span class="verdict v-g1">게임 1 차별</span></td></tr>
+        <tr><td>C3</td><th>코어 루프</th><td>열쇠 → 전투 → 보상 → 성장</td><td>사냥 → 퇴근 → 구매 → 골드 회수 → 건설·재고</td><td><span class="verdict v-eq">구조 다름</span></td></tr>
+        <tr><td>C4</td><th>전투 조작</th><td>수동 액션 + 자동 + 소탕</td><td>전부 자동, 개입은 경영 결정뿐</td><td><span class="verdict v-ar">어라이즈 우위</span></td></tr>
+        <tr><td>C5</td><th>행동 제한</th><td>게이트 열쇠 하루 10개</td><td>없음 (재고·불만도·퇴근 주기가 속도 결정)</td><td><span class="verdict v-g1">게임 1 우위</span></td></tr>
+        <tr><td>C6</td><th>방치 · 오프라인</th><td>일부 (세부 미확인)</td><td>분당 수입 15% × 최대 2시간 + 통행세</td><td><span class="verdict v-g1">게임 1 우위</span></td></tr>
+        <tr><td>C7</td><th>최고 등급 확률</th><td>SSR 1.2% 고정</td><td>신화 0% → 누적 250회 후 2%</td><td><span class="verdict v-ar">어라이즈 우위</span></td></tr>
+        <tr><td>C8</td><th>천장</th><td>80회 확정, 64회부터 소프트</td><td>없음</td><td><span class="verdict v-ar">어라이즈 우위</span></td></tr>
+        <tr><td>C9</td><th>10연 보장</th><td>확인 못 함</td><td>10연마다 금수저 기사 1명 확정, 첫 10연 할인</td><td><span class="verdict v-g1">게임 1 우위</span></td></tr>
+        <tr><td>C10</td><th>중복 처리</th><td>돌파 재료 (헌터 5단계, 무기 ★5)</td><td>중복 개념 없음, 넘치면 보석 환급</td><td><span class="verdict v-ar">어라이즈 우위</span></td></tr>
+        <tr><td>C11</td><th>소환 전 안내</th><td>팝업 세부 미확인</td><td>"출전 n · 보관함 n · 환급 n"을 소환 전에 보여 줌</td><td><span class="verdict v-g1">게임 1 우위</span></td></tr>
+        <tr><td>C12</td><th>성장 축</th><td>5축 이상</td><td>용사·무기·건물·영주·명성</td><td><span class="verdict v-ar">어라이즈 깊음</span></td></tr>
+        <tr><td>C13</td><th>성장 상한 연결</th><td>헌터 레벨 ≤ 성진우 레벨</td><td>Stage → 정원, 영주 Lv → 보관함</td><td><span class="verdict v-eq">비슷</span></td></tr>
+        <tr><td>C14</td><th>온보딩</th><td>군주의 이정표 31챕터</td><td>"다음 목표" 한 줄</td><td><span class="verdict v-ar">어라이즈 우위</span></td></tr>
+        <tr><td>C15</td><th>반복 · 시즌 콘텐츠</th><td>게이트, 주간·2주 시즌 콘텐츠</td><td>Stage 1~20, 레이드 1종</td><td><span class="verdict v-ar">어라이즈 우위</span></td></tr>
+        <tr><td>C16</td><th>소셜</th><td>길드, 길드 상점</td><td>없음</td><td><span class="verdict v-ar">어라이즈 우위</span></td></tr>
+        <tr><td>C17</td><th>BM</th><td>10종 이상 (일일 팩·구독·패스)</td><td>영구 패스 1종 + 보석 3종 + 광고</td><td><span class="verdict v-eq">게임 1 단순</span></td></tr>
+        <tr><td>C18</td><th>저장 · 보안</th><td>서버 저장 (추정)</td><td>브라우저 저장, 시계 되돌림만 무시</td><td><span class="verdict v-ar">어라이즈 우위</span></td></tr>
+      </tbody></table></div>
+    <p class="mute" style="font-size:13.5px;margin-top:8px">C1(장르·화면)은 비교 대상에서 뺐습니다. 출처: 어라이즈 역기획서 11.2절.</p>
+
+    <h3><span class="sn">3.1</span>비교 결과를 둘로 나눔</h3>
+    <div class="grid g2" style="align-items:start">
+      <div class="card"><h4><span class="tag">지킬 것 7개</span></h4><ul class="dot">
+        <li><b>행동력 벽이 없다</b> — 세션 길이를 플레이어가 정함</li>
+        <li><b>소환 전에 결과를 알려 준다</b> — 재화를 쓰기 전에 손해를 앎</li>
+        <li><b>10연 보장이 처음부터 보인다</b></li>
+        <li><b>누적 소환이 되돌아가지 않는 진행</b> — 주점 레벨</li>
+        <li><b>BM이 단순하고 핵심이 편의</b></li>
+        <li><b>방치 보상이 규칙으로 명시</b></li>
+        <li><b>규칙이 판타지를 만든다</b> — 바가지·불만도·소비 성향</li></ul></div>
+      <div class="card"><h4><span class="tag gold">고칠 것 10개 (우선순위)</span></h4><ul class="dot">
+        <li><b>P1</b> F1 최고 등급 250회 잠김·천장 없음 · F2 저장·정산 조작 가능 · F3 확률 고지 일부만</li>
+        <li><b>P2</b> F4 중복 용사 가치 없음 · F5 장기 목표판 없음 · F6 반복 콘텐츠 부족 · F7 보석 용도 겹침 · F8 BM 상한 낮음</li>
+        <li><b>P3</b> F9 전투 개입 없음 · F10 소셜 없음</li></ul>
+        <p class="mute" style="font-size:14px;margin:8px 0 0">고칠 때 <b>지킬 것을 깨지 않도록</b> 했습니다. 예: F1은 '보이는 진행(주점 레벨)'은 남기고 잠금 거리만 줄임.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s4">
+  <div class="band"><div class="wrap"><div class="num">04</div><h2>고친 과정: P1 세 가지</h2><p>보고서의 개선 명세를 그대로 넣지 않고, 기획 방향을 명령으로 덧붙였습니다. 결과는 기획서 v7·v8에 남겼습니다.</p></div></div>
+  <div class="body"><div class="wrap">
+
+    <div class="fix">
+      <span class="tag">F1 · 명령 ⑱ · 기획서 v7</span>
+      <h4>최고 등급이 250회 동안 잠겨 있고 천장이 없다</h4>
+      <div class="ba">
+        <div class="side"><small>수정 전 (v6)</small>주점 Lv.7(누적 250회) 전에는 신화 0%, 해금 뒤에도 천장 없음.<br>신화 1명까지 기대 보석 <b>약 73,050개 (₩60만 선)</b></div>
+        <div class="arr">→</div>
+        <div class="side after"><small>수정 후 (v7)</small>1회차부터 신화 0.5%, 주점 Lv은 확률 <b>보너스</b>로(Lv.7에서 2%). 101회부터 회당 +5%p, <b>120회 확정</b>. 소환 화면에 "신화 확정까지 n회"</div>
+      </div>
+      <dl class="steps" style="margin-top:16px">
+        <dt>내 명령</dt><dd>"여기서 개선할 점에서 첫번째 개선해줘"</dd>
+        <dt>어라이즈 참고</dt><dd>1회차부터 SSR 1.2%, 64회부터 소프트 천장, 80회 확정</dd>
+        <dt>지킨 것</dt><dd>누적 소환이 주점 레벨로 오르는 '보이는 진행'(G4)은 그대로 두고, 확률 보너스로만 바꿈</dd>
+        <dt>검증</dt><dd>주점 Lv 4구간 × 회차 × 1회/10연 확률 합계 100% · 20만 회 시뮬레이션 신화 평균 81.6회, 최대 간격 114회 · 정확한 기대값 82.0회</dd>
+      </dl>
+      <div class="shots">
+        <figure class="shot"><img src="assets/img/shots/07_tab_gacha.png" alt="수정 전 초빙 화면" loading="lazy"><figcaption>수정 전: 신화 0%</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/45_gacha_myth_open.png" alt="1회차 신화 0.5%" loading="lazy"><figcaption>1회차부터 신화 0.5%</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/46_gacha_pity_soft.png" alt="소프트 천장" loading="lazy"><figcaption>109회: 신화 51% · 확정까지 11회</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/47_gacha_pity_result.png" alt="천장 도달 결과" loading="lazy"><figcaption>118회째 소환 → 신화, 카운트 초기화</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="fix">
+      <span class="tag">F2 · 명령 ⑲ · 기획서 v8</span>
+      <h4>저장과 오프라인 정산을 조작할 수 있다</h4>
+      <div class="ba">
+        <div class="side"><small>수정 전</small>저장은 평문 JSON. 부재 시간은 기기 시계로 재고, <b>시계를 앞으로 돌리면</b> 매번 최대치(영업 2시간·통행세 8시간)를 받을 수 있음</div>
+        <div class="arr">→</div>
+        <div class="side after"><small>수정 후</small>정산 한도 통합(기본 <b>2시간</b> + 강화 보너스 + 패스) · 서버 시각 + 단조 시계 · <b>30분 정산 간격</b> · 저장 서명(<b>HMAC-SHA256</b>), 변조 시 직전 백업 복원</div>
+      </div>
+      <dl class="steps" style="margin-top:16px">
+        <dt>내 명령</dt><dd>"2번째 개선사항을 고치는데, 오프라인 최대보상은 2시간 기준이고, <span class="hl">추후 추가될 강화 시스템으로 늘어날 수 있도록</span> 해 줘. 강화 시스템은 상권 증축과 비슷하지만 내용이 달라. 재화를 사용하게 할 시스템으로 구축할 거야."</dd>
+        <dt>AI 질문 → 내 답</dt><dd>영업 수익과 통행세의 한도를 어떻게 할지 → "영업 수익·통행세 둘 다 2시간, 패스는 둘 다 8시간"</dd>
+        <dt>보고서와 다른 점</dt><dd>보고서는 서버 권위만 제안했지만, 앞으로 넣을 <b>강화 시스템이 한도를 늘리는 연결 구조</b>(항목 0개로 시작)를 함께 만듦 → 재화 소비처를 미리 설계</dd>
+        <dt>검증</dt><dd>SHA-256·HMAC 표준 예제 일치 · 3시간 부재 → 2시간분만 정산 · 시계 되돌림 0G · 저장본 골드 수정 → 변조 감지·백업 복원 · <span class="red">서버가 없어 보석·소환의 서버 확정은 미적용(한계로 기록)</span></dd>
+      </dl>
+      <div class="shots">
+        <figure class="shot"><img src="assets/img/shots/48_offline_cap.png" alt="정산 한도" loading="lazy"><figcaption>3시간 부재 → 2시간분만</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/49_offline_gap.png" alt="정산 간격" loading="lazy"><figcaption>30분 안 재접속 → 정산 없음</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/54_save_tamper.png" alt="저장 변조 감지" loading="lazy"><figcaption>저장본 수정 → 변조 감지</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="fix">
+      <span class="tag">F3 · 명령 ⑳ · 기획서 v8</span>
+      <h4>확률 고지가 일부만 보인다</h4>
+      <div class="ba">
+        <div class="side"><small>수정 전</small>1회 소환 등급 확률만 표시. 10연 2배, 직업 확률(A 이상 40% 금수저 기사), 10연 확정 규칙은 표에 없음</div>
+        <div class="arr">→</div>
+        <div class="side after"><small>수정 후</small>초빙 창 왼쪽 위 <b>[?]</b> → 「확률 정보」 5구역: 등급 · 주점 레벨별 · 직업 · 소비 성향 · 보장 규칙</div>
+      </div>
+      <dl class="steps" style="margin-top:16px">
+        <dt>내 명령</dt><dd>"3번째 개선사항도 진행하는데, <span class="hl">왼쪽 상단에 ? 버튼</span>을 통해 확인할 수 있도록 해줘."</dd>
+        <dt>왜 중요한가</dt><dd>한국 출시 시 확률형 아이템 정보 공개 의무(게임산업법, 2024-03-22 시행)</dd>
+        <dt>검증</dt><dd>표의 확률식이 실제 소환 코드와 같은지 대조 · 10연 10번째 금수저 기사 96.5%</dd>
+      </dl>
+      <div class="shots">
+        <figure class="shot"><img src="assets/img/shots/50_gacha_help_button.png" alt="? 버튼" loading="lazy"><figcaption>왼쪽 위 [?]</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/51_prob_info_top.png" alt="확률 정보 1" loading="lazy"><figcaption>등급 · 주점 레벨별</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/52_prob_info_mid.png" alt="확률 정보 2" loading="lazy"><figcaption>직업 · 소비 성향</figcaption></figure>
+        <figure class="shot"><img src="assets/img/shots/53_prob_info_rules.png" alt="확률 정보 3" loading="lazy"><figcaption>보장 규칙 · 천장 카운트</figcaption></figure>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<section class="part" id="s5">
+  <div class="band"><div class="wrap"><div class="num">05</div><h2>결과</h2><p>숫자로 본 변화</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="grid g3">
+      <div class="card kpi"><b>275 → 82회</b><span>첫 신화까지 기대 소환 (어라이즈 SSR 46.6회)</span></div>
+      <div class="card kpi"><b>무제한 → 2시간</b><span>시계 조작 시 정산 (+30분 간격 · 저장 서명)</span></div>
+      <div class="card kpi"><b>1표 → 5구역</b><span>확률 정보 (등급·레벨·직업·성향·보장)</span></div>
+    </div>
+    <p style="margin-top:16px">전체 과정은 기획서 v7·v8의 '사용자 명령 원문 → 구현 요약 → 이전 대비 변경 → 명령 해석 → 검증 → 남은 과제' 순서로 기록돼 있습니다. 게임 화면 변화는 <a href="../dungeon-capitalist/#compare">v1 · v8 비교 영상</a>의 '확률 정보' 장면에서도 볼 수 있습니다.</p>
+  </div></div>
+</section>
+
+<section class="part" id="s6">
+  <div class="band"><div class="wrap"><div class="num">06</div><h2>남은 과제</h2><p>P2·P3는 다음 개선 목록입니다. 제안 수치는 모두 가설이라 시뮬레이션으로 검증한 뒤 넣을 계획입니다.</p></div></div>
+  <div class="body"><div class="wrap">
+    <div class="scroll-x"><table class="tbl">
+      <thead><tr><th>#</th><th>고칠 점</th><th>어라이즈 참고</th><th>제안 (가설)</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr><td>F1</td><th>신화 잠금 · 천장 없음</th><td>80회 확정</td><td>0.5% 개방 · 120회 천장</td><td><span class="status done">✔ v7 반영</span></td></tr>
+        <tr><td>F2</td><th>저장 · 정산 조작</th><td>서버 확정 (추정)</td><td>한도·간격·서명 + 서버 권위</td><td><span class="status part">◐ v8 일부 (서버 없음)</span></td></tr>
+        <tr><td>F3</td><th>확률 고지 일부</th><td>—</td><td>확률 정보 한 화면</td><td><span class="status done">✔ v8 반영</span></td></tr>
+        <tr><td>F4</td><th>중복 용사 가치 없음</th><td>중복 = 돌파 재료</td><td>같은 용사 3명 → ★+1, 방출 시 증표</td><td><span class="status todo">다음</span></td></tr>
+        <tr><td>F5</td><th>장기 목표판 없음</th><td>군주의 이정표</td><td>「영주의 장부」 미션판</td><td><span class="status todo">다음</span></td></tr>
+        <tr><td>F6</td><th>반복 콘텐츠 부족</th><td>주간 보스 · 2주 시즌</td><td>주간 「상권 대목」, 레이드 시간 등급</td><td><span class="status todo">다음</span></td></tr>
+        <tr><td>F7</td><th>보석 용도 겹침</th><td>—</td><td>분수대 연설을 골드 비용으로</td><td><span class="status todo">다음</span></td></tr>
+        <tr><td>F8</td><th>BM 상한 낮음</th><td>일일 팩 · 시즌 패스</td><td>회원권 · 시즌 패스 2종만</td><td><span class="status todo">다음</span></td></tr>
+        <tr><td>F9</td><th>전투 개입 없음</th><td>극한회피 · 무기 교체</td><td>보스 포효 직전 「호루라기」</td><td><span class="status todo">출시 후</span></td></tr>
+        <tr><td>F10</td><th>소셜 없음</th><td>길드 상점</td><td>「상인 길드」 공동 매출</td><td><span class="status todo">출시 후</span></td></tr>
+      </tbody></table></div>
+    <p class="mute" style="font-size:13.5px;margin-top:10px">어라이즈 수치는 공개 자료·공략 기준(신뢰도 표기)이며 직접 계측한 값이 아닙니다. 게임 1 수치는 코드 기준입니다.</p>
+  </div></div>
+</section>
+
+</main>
+
+<footer><div class="wrap"><b>어라이즈 역기획 → 〈던전 앞 자본주의 상점가〉 개선</b> · 김다운 · 2026<br><a href="../" style="color:#ffd36b">← 포트폴리오 목록</a> · <a href="../dungeon-capitalist/" style="color:#ffd36b">〈던전 앞 자본주의 상점가〉 전체 제작 과정</a></div></footer>
+
+<script>
+// 누적 확률 그래프: n회까지 최고 등급을 한 번 이상 얻었을 확률
+(() => {
+  const N = 300;
+  const series = [
+    { name: '게임 1 수정 후 (v7)', col: '#2a78d6', dash: '', p: n => n >= 120 ? 1 : n > 100 ? 0.005 + 0.05 * (n - 100) : 0.005, end: '82회 · 120회 확정' },
+    { name: '어라이즈 SSR', col: '#eb6834', dash: '', p: n => n >= 80 ? 1 : n >= 64 ? 0.012 + 0.058 * (n - 63) : 0.012, end: '46.6회 · 80회 확정' },
+    { name: '게임 1 수정 전 (v6)', col: '#1baf7a', dash: '6 5', p: n => n > 250 ? 0.02 : 0, end: '250회까지 0%' },
+  ];
+  series.forEach(s => { let none = 1; s.c = [0]; for (let n = 1; n <= N; n++) { none *= 1 - Math.min(1, s.p(n)); s.c.push(1 - none); } });
+  const svg = document.getElementById('chart'), W = 760, H = 330, L = 46, R = 16, T = 12, B = 34;
+  const x = n => L + (W - L - R) * n / N, y = v => T + (H - T - B) * (1 - v);
+  let h = '';
+  [0, .25, .5, .75, 1].forEach(v => { h += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#e6e8ee" stroke-width="1"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#5b6478">${v * 100}%</text>`; });
+  [0, 50, 100, 150, 200, 250, 300].forEach(n => { h += `<text x="${x(n)}" y="${H - 12}" text-anchor="middle" font-size="11" fill="#5b6478">${n}회</text>`; });
+  h += `<line x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}" stroke="#b9bfcc" stroke-width="1"/>`;
+  series.slice().reverse().forEach(s => { const d = s.c.map((v, n) => `${n ? 'L' : 'M'}${x(n).toFixed(1)},${y(v).toFixed(1)}`).join(''); h += `<path d="${d}" fill="none" stroke="${s.col}" stroke-width="2" stroke-dasharray="${s.dash}" stroke-linejoin="round"/>`; });
+  // 직접 라벨
+  h += `<text x="${x(126)}" y="${y(0.9)}" font-size="12" font-weight="700" fill="#222a3d">수정 후: 120회 확정 (평균 82회)</text>`;
+  h += `<text x="${x(76)}" y="${y(0.78)}" font-size="12" font-weight="700" fill="#222a3d" text-anchor="end">어라이즈: 80회 확정 (평균 46.6회)</text>`;
+  h += `<text x="${x(256)}" y="${y(0.08)}" font-size="12" font-weight="700" fill="#222a3d">수정 전: 250회부터</text>`;
+  h += `<line id="xh" x1="0" x2="0" y1="${T}" y2="${y(0)}" stroke="#8a93a6" stroke-width="1" visibility="hidden"/>`;
+  series.forEach((s, i) => { h += `<circle id="dot${i}" r="5" fill="${s.col}" stroke="#fcfcfb" stroke-width="2" visibility="hidden"/>`; });
+  h += `<rect x="${L}" y="${T}" width="${W - L - R}" height="${H - T - B}" fill="transparent" id="hit"/>`;
+  svg.innerHTML = h;
+  document.getElementById('legend').innerHTML = series.map(s => `<span><i style="border-top-color:${s.col};border-top-style:${s.dash ? 'dashed' : 'solid'}"></i>${s.name}</span>`).join('');
+  const tip = document.getElementById('tip'), wrap = document.getElementById('chartWrap'), hit = document.getElementById('hit');
+  const move = e => {
+    const r = svg.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * W;
+    const n = Math.max(1, Math.min(N, Math.round((px - L) / (W - L - R) * N)));
+    document.getElementById('xh').setAttribute('x1', x(n)); document.getElementById('xh').setAttribute('x2', x(n)); document.getElementById('xh').setAttribute('visibility', 'visible');
+    series.forEach((s, i) => { const d = document.getElementById('dot' + i); d.setAttribute('cx', x(n)); d.setAttribute('cy', y(s.c[n])); d.setAttribute('visibility', 'visible'); });
+    tip.innerHTML = `<b>${n}회 소환까지</b><br>` + series.map(s => `<span class="sw" style="background:${s.col}"></span>${s.name}: <b>${(s.c[n] * 100).toFixed(1)}%</b>`).join('<br>');
+    tip.style.display = 'block';
+    const wr = wrap.getBoundingClientRect(); let left = e.clientX - wr.left + 14; if (left + 230 > wr.width) left = e.clientX - wr.left - 244; tip.style.left = left + 'px'; tip.style.top = (e.clientY - wr.top - 20) + 'px';
+  };
+  const leave = () => { tip.style.display = 'none'; document.getElementById('xh').setAttribute('visibility', 'hidden'); series.forEach((s, i) => document.getElementById('dot' + i).setAttribute('visibility', 'hidden')); };
+  hit.addEventListener('pointermove', move); hit.addEventListener('pointerleave', leave);
+})();
+</script>
+</body>
+</html>
