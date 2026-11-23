@@ -10,7 +10,8 @@
 <style>
   .hero { background-image: url(dungeon-capitalist/assets/img/bg_title.jpg); padding: 88px 0 64px; }
   .hero .wrap { grid-template-columns: 1fr; }
-  .works { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+  @media (max-width: 1060px) { .works { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .work { display: block; background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); color: inherit; text-decoration: none !important; transition: transform .15s, box-shadow .15s; }
   .work:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(27, 36, 64, .14); }
   .work img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
@@ -44,6 +45,13 @@
       <div class="in"><span class="tag">팀 프로젝트 · 기획</span><span class="tag gray">머지 퍼즐</span>
         <h2>〈바이블 머지〉</h2>
         <p>팀이 손그림으로 기획한 게임을 AI로 점검·밸런스 재설계·역기획 반영·그림 교체까지 이어 간 기록</p>
+        <span class="hl">보기 →</span></div>
+    </a>
+    <a class="work" href="arise/">
+      <img src="arise/assets/img/card.jpg" alt="어라이즈 역기획으로 고친 세 가지">
+      <div class="in"><span class="tag">경쟁작 역기획 · 비교</span><span class="tag gray">상점가 개선</span>
+        <h2>어라이즈 역기획 → 상점가 개선</h2>
+        <p>〈나 혼자만 레벨업: 어라이즈〉를 역기획해 18개 항목으로 비교하고, 신화 천장·정산 조작 방지·확률 정보를 고친 과정</p>
         <span class="hl">보기 →</span></div>
     </a>
   </div>
